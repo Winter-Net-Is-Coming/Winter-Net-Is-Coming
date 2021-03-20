@@ -21,3 +21,5 @@ const Game = db.define('game', {
 
 });
 
+module.exports = Game
+
