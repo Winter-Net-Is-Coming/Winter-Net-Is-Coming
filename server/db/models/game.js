@@ -13,11 +13,18 @@ const Game = db.define('game', {
         },
       },
 
-
       level : {
         type: Sequelize.ENUM('Beginner', 'Intermediate', 'Advanced'),
         defaultValue: 'Beginner'
-      }
+      },
+
+      gameDescription: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },
 
 });
 
