@@ -1,6 +1,9 @@
 // define associations here
 const User = require('./user');
-const Game = require('./game')
+const Game = require('./game');
+const User_Game_Profile = require('./user_game_profile');
+const Sequelize = require('sequelize');
+
 //const Product = require('./product.js')
 ////const Cart = require('./cart.js')
 //const CartItem = require('./cartItem.js')
@@ -28,14 +31,20 @@ const Game = require('./game')
 // Cart.belongsToMany(User, {through: 'UserCart'})
 
 //User.hasMany(Cart)
-Game.hasMany(User);
+//Game.hasMany(User);
 //Cart.belongsTo(User)
-User.belongsTo(Game);
+//User.belongsTo(Game);
 
 // Cart.hasMany(CartItem)
 // CartItem.belongsTo(Cart)
 
+
+//const User_Game_Profile = Sequelize.define('User_Game_Profile', {}, { timestamps: false });
+User.belongsToMany(Game, { through: User_Game_Profile });
+Game.belongsToMany(User, { through: User_Game_Profile });
+
 module.exports = {
   User,
-  Game
+  Game,
+  User_Game_Profile
 }
