@@ -30,35 +30,16 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING,
   },
-  firstName: {
+
+  userName: {
     type: Sequelize.STRING,
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true,
-    // },
+     allowNull: false,
+     unique: true,
+    validate: {
+      notEmpty: true,
+    },
   },
-  lastName: {
-    type: Sequelize.STRING,
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true,
-    // },
-  },
-  address: {
-    type: Sequelize.TEXT,
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true,
-    // },
-  },
-  phone: {
-    type: Sequelize.STRING,
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true,
-    //   isNumeric: true
-    // },
-  },
+  
   adminStatus: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,

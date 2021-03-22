@@ -15,16 +15,12 @@ async function seed() {
     const password = faker.internet.password()
     const firstName = faker.name.firstName()
     const lastName = faker.name.lastName()
-    const address = faker.address.streetAddress()
-    const phone = faker.phone.phoneNumber()
+    const userName = firstName + lastName
 
     usersArray.push({
       email,
       password,
-      firstName,
-      lastName,
-      address,
-      phone,
+      userName,
     })
   };
 
