@@ -25,6 +25,12 @@ export default class MyGame extends Phaser.Scene {
 
     //Optional animation for our cursor when we get to drag and drop zones
     // this.load.image('cursor', 'public/assets/cursorbanana.png');
+
+    //loading testblock images
+    this.load.image('testblock', 'public/assets/testblock.png');
+    this.load.image('testblock2', 'public/assets/testblock2.png');
+    this.load.image('testblock3', 'public/assets/testblock3.png');
+    this.load.image('testblock4', 'public/assets/testblock4.png');
   }
 
   create() {
@@ -50,16 +56,69 @@ export default class MyGame extends Phaser.Scene {
     //generate our character to a specific part of the screen(middle)
     // consider resizing the sprite instead of using a setScale function
     //set fixed rotation is to prevent the character from spinning
-    const { width, height } = this.scale;
+    //const { width, height } = this.scale;
     this.monkey = this.matter.add
-      .sprite(width * 0.5, height * 0.5, 'monkey')
+      .sprite(300, 1700, 'monkey')
       .setScale(0.75)
       .setFixedRotation();
+
+    //adding testblocks
+    const testblock = this.matter.add
+      .image(490, 1900, 'testblock')
+      .setInteractive()
+      .setFixedRotation();
+
+    const testblock2 = this.matter.add
+      .image(testblock.x + 120, 1900, 'testblock2')
+      .setInteractive()
+      .setFixedRotation();
+
+    const testblock3 = this.matter.add
+      .image(testblock2.x + 125, 1900, 'testblock3')
+      .setInteractive()
+      .setFixedRotation();
+
+    const testblock4 = this.matter.add
+      .image(testblock3.x + 125, 1900, 'testblock4')
+      .setInteractive()
+      .setFixedRotation();
+
+    this.input.setDraggable(testblock);
+    this.input.setDraggable(testblock2);
+    this.input.setDraggable(testblock3);
+    this.input.setDraggable(testblock4);
+
+    this.input.dragDistanceThreshold = 0;
+    this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+      gameObject.x = dragX;
+      gameObject.y = dragY;
+    });
+
+    this.input.on('drag', function (pointer, gameObject) {
+      console.log('X', gameObject.x, 'Y', gameObject.y);
+      //console.log(gameObject.x);
+    });
+
+    this.input.on('dragend', function (pointer, gameObject, dropped) {
+      //while dragging, when dropped, return object back to original starting pos.
+      if (!dropped) {
+        gameObject.x = gameObject.input.dragStartX;
+        gameObject.y = gameObject.input.dragStartY;
+      }
+    });
+    // this.input.on("drop", function (pointer, gameObject, dropZone) {
+    //   dropZone.data.values.bars++;
+    //   gameObject.x = dropZone.x - 300 + dropZone.data.values.bars * 100;
+    //   gameObject.y = dropZone.y;
+    //   if (gameObject.x > 750) {
+    //     gameObject.disableInteractive();
+    //   }
+    // });
+    //}
 
     // this.monkey = new Monkey(this, 20, 400, 'monkey').setScale(0.75);
 
     // this.cameras.main.setBounds(0, 0, 1920 * 2, 1080 * 2);
-    //this.physics.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
 
     //set the camera to our main character
     this.cameras.main.startFollow(this.monkey);
