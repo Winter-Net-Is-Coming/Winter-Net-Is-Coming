@@ -1,5 +1,6 @@
 import Phaser, { GameObjects } from "phaser";
 import rectangle from "./assets/rectangle.png";
+//hiiiiii
 import Zone from "./zone";
 class MyGame extends Phaser.Scene {
   constructor() {
