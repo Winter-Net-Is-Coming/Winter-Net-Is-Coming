@@ -20,10 +20,10 @@ const Game = db.define('game', {
 
       gameDescription: {
         type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        // allowNull: false,
+        // validate: {
+        //   notEmpty: true,
+        // },
       },
 
 });

@@ -56,7 +56,6 @@ const User = db.define('user', {
     // allowNull: false,
     // validate: {
     //   notEmpty: true,
-    // not sure if this validation is worth the trouble it would cause
     //   isNumeric: true
     // },
   },

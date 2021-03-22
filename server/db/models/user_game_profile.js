@@ -7,7 +7,7 @@ const User_Game_Profile = db.define('userGameProfile', {
 
     score : {
         type: Sequelize.INTEGER,
-        //allowNull: false, SM commented this out
+        //allowNull: false,
         defaultValue: 0,
         validate: {
           min: 0
