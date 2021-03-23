@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Zone from '../entity/Zone.js';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -47,6 +48,20 @@ export default class MyGame extends Phaser.Scene {
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
 
+    //adding test zone
+    this.zone = new Zone(this);
+
+    this.dropZOne = this.zone.renderZone(790, 1800, 200, 1000);
+
+    this.dropZTwo = this.zone.renderZone(680, 1800, 200, 1000);
+
+    this.dropZThree = this.zone.renderZone(570, 1800, 200, 1000);
+
+    // this.outlineOne = this.zone.renderOutline(this.dropZOne, 0xff09d2);
+    // this.outlineTwo = this.zone.renderOutline(this.dropZTwo, 0xff09d2);
+    // this.outlineThree = this.zone.renderOutline(this.dropZThree, 0xff09d2);
+    // overall zone 750, 2100, 700, 1200
+
     //this.ground = this.physics.add.staticGroup({ classType: Ground });
 
     // this.monkey.setCollideWorldBounds(true);
@@ -63,23 +78,24 @@ export default class MyGame extends Phaser.Scene {
       .setFixedRotation();
 
     //adding testblocks
-    const testblock = this.matter.add
-      .image(490, 1900, 'testblock')
+    const testblock4 = this.matter.add
+      .image(490, 1900, 'testblock4')
+      .setInteractive()
+      .setFixedRotation();
+    //testblock4.startingposition = testblock.x;
+    const testblock2 = this.matter.add
+      .image(testblock4.x + 120, 1900, 'testblock2')
       .setInteractive()
       .setFixedRotation();
 
-    const testblock2 = this.matter.add
-      .image(testblock.x + 120, 1900, 'testblock2')
+    const testblock = this.matter.add
+      .image(testblock2.x + 125, 1900, 'testblock')
       .setInteractive()
       .setFixedRotation();
+    //console.log('X', testblock.x, 'Y', testblock.y);
 
     const testblock3 = this.matter.add
-      .image(testblock2.x + 125, 1900, 'testblock3')
-      .setInteractive()
-      .setFixedRotation();
-
-    const testblock4 = this.matter.add
-      .image(testblock3.x + 125, 1900, 'testblock4')
+      .image(testblock.x + 125, 1900, 'testblock3')
       .setInteractive()
       .setFixedRotation();
 
@@ -95,7 +111,7 @@ export default class MyGame extends Phaser.Scene {
     });
 
     this.input.on('drag', function (pointer, gameObject) {
-      console.log('X', gameObject.x, 'Y', gameObject.y);
+      // console.log('X', gameObject.x, 'Y', gameObject.y);
       //console.log(gameObject.x);
     });
 
@@ -105,7 +121,42 @@ export default class MyGame extends Phaser.Scene {
         gameObject.x = gameObject.input.dragStartX;
         gameObject.y = gameObject.input.dragStartY;
       }
+      console.log(gameObject.texture.key, gameObject.x, gameObject.y);
     });
+
+    // adding tests for body/bounce
+    // this.matter.world.setFPS(120);
+    // this.body.setBounce(1);
+
+    /**
+     * FIRST SWAP ZONE
+     * activate swap zone
+     * if testblock4 is not at x 632, reset
+     * else we'll inactivate our zone
+     * activate the next zone
+     * is 4 at 772? if no reset
+     * if yes --> inactivate zone and activate the next zone
+     * is 4 at 840?
+     * then reactivate zone 1
+     * have them swap blocks 1 and 2
+     * check if testblock 2 is at x 624? if it is then we're done, else, reset
+     *
+     */
+    // this.dropZOne
+    // this.dropZTwo
+    // this.dropZThree
+
+    function firstSwapZone() {
+      this.dropZOne.active = true;
+      let currentBlock = gameObject.texture.key;
+      let xPos = gameObject.x;
+      if (currentBlock === 'textblock4' && xPos > 609 && xPos < 635) {
+        this.dropZOne.active = false;
+        this.dropZTwo.active = true;
+      } else {
+      }
+    }
+
     // this.input.on("drop", function (pointer, gameObject, dropZone) {
     //   dropZone.data.values.bars++;
     //   gameObject.x = dropZone.x - 300 + dropZone.data.values.bars * 100;
