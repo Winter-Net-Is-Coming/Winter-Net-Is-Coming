@@ -140,7 +140,7 @@ export default class MyGame extends Phaser.Scene {
 
   update() {
     //moves our character left, right, and jumping
-    const speed = 15;
+    const speed = 4;
     if (this.cursors.left.isDown) {
       this.monkey.flipX = true;
       this.monkey.setVelocityX(-speed);
@@ -153,13 +153,12 @@ export default class MyGame extends Phaser.Scene {
       this.monkey.setVelocityX(0);
       this.monkey.play('idle', true);
     }
-
     //uses the built in function Just Down on keyboard to see if the button was just pressed
     //we do this because we dont want someone too hold down space and continue to jump
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
 
     if (justPressedSpace) {
-      this.monkey.setVelocityY(-12);
+      this.monkey.setVelocityY(-15);
     }
   }
   createMonkeyAnimations() {

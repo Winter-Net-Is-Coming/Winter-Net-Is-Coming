@@ -38,6 +38,7 @@ const config = {
     default: 'matter',
     matter: {
       debug: false,
+      gravity: { y: 2 },
     },
   },
   scene: [MyGame],
