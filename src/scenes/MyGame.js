@@ -116,35 +116,13 @@ export default class MyGame extends Phaser.Scene {
     // });
     //}
 
-    // this.monkey = new Monkey(this, 20, 400, 'monkey').setScale(0.75);
-
-    // this.cameras.main.setBounds(0, 0, 1920 * 2, 1080 * 2);
-
     //set the camera to our main character
     this.cameras.main.startFollow(this.monkey);
     this.cameras.main.setBounds(0, 0, 1920 * 2, 1080 * 2);
     this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
 
-    //create the idle and running animations for our character
-    this.monkey.anims.create({
-      key: 'idle',
-      frames: [{ key: 'monkey', frame: 'monkey_idle.png' }],
-    });
-
-    this.monkey.anims.create({
-      key: 'run',
-      frameRate: 15,
-      frames: this.anims.generateFrameNames('monkey', {
-        prefix: 'monkey_run_',
-        start: 1,
-        end: 8,
-        suffix: '.png',
-      }),
-      repeat: -1,
-    });
-
-    //start this by intiating the character in the idle frame
-    this.monkey.play('idle');
+    // set the monkey animation
+    this.createMonkeyAnimations();
 
     //adding cursor movement
     // const cursor = this.add.image(0, 0, 'cursor').setVisible(false);
@@ -183,5 +161,34 @@ export default class MyGame extends Phaser.Scene {
     if (justPressedSpace) {
       this.monkey.setVelocityY(-12);
     }
+  }
+  createMonkeyAnimations() {
+    this.anims.create({
+      key: 'run',
+      frameRate: 10,
+      frames: this.anims.generateFrameNames('monkey', {
+        start: 1,
+        end: 8,
+        prefix: 'monkey_run_',
+        suffix: '.png',
+      }),
+      repeat: -1,
+    }),
+      this.anims.create({
+        key: 'idle',
+        frameRate: 10,
+        frames: [{ key: 'monkey', frame: 'monkey_idle.png' }],
+      }),
+      this.anims.create({
+        key: 'jump',
+        frameRate: 10,
+        frames: this.anims.generateFrameNames('monkey', {
+          start: 1,
+          end: 4,
+          prefix: 'monkey_jump_',
+          suffix: '.png',
+        }),
+        repeat: -1,
+      });
   }
 }
