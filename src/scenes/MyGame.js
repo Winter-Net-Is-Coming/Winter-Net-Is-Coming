@@ -122,6 +122,8 @@ export default class MyGame extends Phaser.Scene {
 
     //set the camera to our main character
     this.cameras.main.startFollow(this.monkey);
+    this.cameras.main.setBounds(0, 0, 1920 * 2, 1080 * 2);
+    this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
 
     //create the idle and running animations for our character
     this.monkey.anims.create({
