@@ -34,6 +34,7 @@ const config = {
   // parent: 'phaser-example',
   width: 1200,
   height: 600,
+  autoCenter: true,
   physics: {
     default: 'matter',
     matter: {
