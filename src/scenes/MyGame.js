@@ -99,10 +99,10 @@ export default class MyGame extends Phaser.Scene {
       .setInteractive()
       .setFixedRotation();
 
-    this.input.setDraggable(testblock);
-    this.input.setDraggable(testblock2);
-    this.input.setDraggable(testblock3);
-    this.input.setDraggable(testblock4);
+    this.input.setDraggable(testblock, false);
+    this.input.setDraggable(testblock2, false);
+    this.input.setDraggable(testblock3, false);
+    this.input.setDraggable(testblock4, true);
 
     this.input.dragDistanceThreshold = 0;
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -121,9 +121,49 @@ export default class MyGame extends Phaser.Scene {
         gameObject.x = gameObject.input.dragStartX;
         gameObject.y = gameObject.input.dragStartY;
       }
-      console.log(gameObject.texture.key, gameObject.x, gameObject.y);
+      // console.log(gameObject.texture.key, gameObject.x, gameObject.y);
     });
 
+    // this.input.on('dragend', function (pointer, gameObject, dropped) {
+    //   // does inside of this function not have access to the instances starting with this?
+    //   this.dropZOne.active = true;
+    //   console.log(this.dropZOne);
+    //   while (this.dropZOne.active) {
+    //     this.outlineOne = this.zone.renderOutline(this.dropZOne, 0xff09d2);
+    //   }
+    //   let currentBlock = gameObject.texture.key;
+    //   let xPos = gameObject.x;
+    //   if (currentBlock === 'textblock4' && xPos > 609 && xPos < 635) {
+    //     this.dropZOne.active = false;
+    //     this.dropZTwo.active = true;
+    //   } else {
+    //     gameObject.x = gameObject.input.dragStartX;
+    //   }
+    // });
+
+    // variables outside of the scope to manipulate in the function
+    // move counter variable
+    this.input.on('dragend', function (pointer, gameObject, dropped) {
+      let currentBlock = gameObject.texture.key;
+
+      let xPos = gameObject.x;
+      console.log(xPos);
+      console.log(gameObject);
+
+      if (currentBlock === 'testblock4' && xPos > 609 && xPos < 635) {
+        window.alert('Thats right!').then();
+        // if its the wrong move we reset it
+      } else if (currentBlock === 'testblock4' && xPos > 720 && xPos < 750) {
+        window.alert('Thats right!');
+      } else if (currentBlock === 'testblock4' && xPos > 810 && xPos < 850) {
+        window.alert('Thats right!');
+        testblock4.input.draggable = false;
+        testblock2.input.draggable = true;
+      } else if (currentBlock === 'testblock2' && xPos > 600 && xPos < 630) {
+        window.alert('Thats right! Good job solving your first bubble sort!');
+        testblock2.input.draggable = false;
+      }
+    });
     // adding tests for body/bounce
     // this.matter.world.setFPS(120);
     // this.body.setBounce(1);
@@ -145,17 +185,6 @@ export default class MyGame extends Phaser.Scene {
     // this.dropZOne
     // this.dropZTwo
     // this.dropZThree
-
-    function firstSwapZone() {
-      this.dropZOne.active = true;
-      let currentBlock = gameObject.texture.key;
-      let xPos = gameObject.x;
-      if (currentBlock === 'textblock4' && xPos > 609 && xPos < 635) {
-        this.dropZOne.active = false;
-        this.dropZTwo.active = true;
-      } else {
-      }
-    }
 
     // this.input.on("drop", function (pointer, gameObject, dropZone) {
     //   dropZone.data.values.bars++;
