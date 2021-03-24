@@ -23,15 +23,17 @@ export default class MyGame extends Phaser.Scene {
     this.load.image('tiles', 'public/assets/platformersheet.png');
     //loads the json files for our tile map
     this.load.tilemapTiledJSON('tilemap', 'public/assets/levelOne.json');
-
-    //Optional animation for our cursor when we get to drag and drop zones
-    // this.load.image('cursor', 'public/assets/cursorbanana.png');
-
     //loading testblock images
-    this.load.image('testblock', 'public/assets/testblock.png');
-    this.load.image('testblock2', 'public/assets/testblock2.png');
-    this.load.image('testblock3', 'public/assets/testblock3.png');
-    this.load.image('testblock4', 'public/assets/testblock4.png');
+    for (let i = 1; i <= 15; i++) {
+      this.load.image(`block${i}`, `public/assets/blocks/block${i}.png`);
+    }
+  }
+
+  generateBlock(x, y, blockName) {
+    return this.matter.add
+      .image(x, y, blockName)
+      .setInteractive()
+      .setFixedRotation();
   }
 
   create() {
@@ -73,36 +75,29 @@ export default class MyGame extends Phaser.Scene {
     //set fixed rotation is to prevent the character from spinning
     //const { width, height } = this.scale;
     this.monkey = this.matter.add
-      .sprite(300, 1700, 'monkey')
+      .sprite(105, 1700, 'monkey')
       .setScale(0.75)
       .setFixedRotation();
 
-    //adding testblocks
-    const testblock4 = this.matter.add
-      .image(490, 1900, 'testblock4')
-      .setInteractive()
-      .setFixedRotation();
-    //testblock4.startingposition = testblock.x;
-    const testblock2 = this.matter.add
-      .image(testblock4.x + 120, 1900, 'testblock2')
-      .setInteractive()
-      .setFixedRotation();
+    const block4 = this.generateBlock(490, 1900, 'block4');
+    const block2 = this.generateBlock(block4.x + 125, 1900, 'block2');
+    const block1 = this.generateBlock(block2.x + 125, 1900, 'block1');
+    const block3 = this.generateBlock(block1.x + 125, 1900, 'block3');
 
-    const testblock = this.matter.add
-      .image(testblock2.x + 125, 1900, 'testblock')
-      .setInteractive()
-      .setFixedRotation();
-    //console.log('X', testblock.x, 'Y', testblock.y);
+    const block7 = this.generateBlock(1500, 1800, 'block7');
+    const block6 = this.generateBlock(block7.x + 120, 1800, 'block6');
+    const block5 = this.generateBlock(block6.x + 120, 1800, 'block5');
+    const block9 = this.generateBlock(block5.x + 120, 1800, 'block9');
+    const block8 = this.generateBlock(block9.x + 120, 1800, 'block8');
 
-    const testblock3 = this.matter.add
-      .image(testblock.x + 125, 1900, 'testblock3')
-      .setInteractive()
-      .setFixedRotation();
+    const block15 = this.generateBlock(4028, 1600, 'block15');
+    const block10 = this.generateBlock(block15.x + 120, 1600, 'block10');
+    const block14 = this.generateBlock(block10.x + 120, 1600, 'block14');
+    const block11 = this.generateBlock(block14.x + 120, 1600, 'block11');
+    const block13 = this.generateBlock(block11.x + 120, 1600, 'block13');
+    const block12 = this.generateBlock(block13.x + 120, 1600, 'block12');
 
-    this.input.setDraggable(testblock, false);
-    this.input.setDraggable(testblock2, false);
-    this.input.setDraggable(testblock3, false);
-    this.input.setDraggable(testblock4, true);
+    this.input.setDraggable(block4, true);
 
     this.input.dragDistanceThreshold = 0;
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -150,18 +145,18 @@ export default class MyGame extends Phaser.Scene {
       console.log(xPos);
       console.log(gameObject);
 
-      if (currentBlock === 'testblock4' && xPos > 609 && xPos < 635) {
-        window.alert('Thats right!').then();
+      if (currentBlock === 'block4' && xPos > 609 && xPos < 635) {
+        window.alert('Thats right!');
         // if its the wrong move we reset it
-      } else if (currentBlock === 'testblock4' && xPos > 720 && xPos < 750) {
+      } else if (currentBlock === 'block4' && xPos > 720 && xPos < 750) {
         window.alert('Thats right!');
-      } else if (currentBlock === 'testblock4' && xPos > 810 && xPos < 850) {
+      } else if (currentBlock === 'block4' && xPos > 810 && xPos < 850) {
         window.alert('Thats right!');
-        testblock4.input.draggable = false;
-        testblock2.input.draggable = true;
-      } else if (currentBlock === 'testblock2' && xPos > 600 && xPos < 630) {
+        block4.input.draggable = false;
+        block2.input.draggable = true;
+      } else if (currentBlock === 'block2' && xPos > 600 && xPos < 630) {
         window.alert('Thats right! Good job solving your first bubble sort!');
-        testblock2.input.draggable = false;
+        block2.input.draggable = false;
       }
     });
     // adding tests for body/bounce
@@ -196,8 +191,6 @@ export default class MyGame extends Phaser.Scene {
     // });
     //}
 
-    // this.monkey = new Monkey(this, 20, 400, 'monkey').setScale(0.75);
-
     // this.cameras.main.setBounds(0, 0, 1920 * 2, 1080 * 2);
 
     //set the camera to our main character
@@ -223,19 +216,6 @@ export default class MyGame extends Phaser.Scene {
 
     //start this by intiating the character in the idle frame
     this.monkey.play('idle');
-
-    //adding cursor movement
-    // const cursor = this.add.image(0, 0, 'cursor').setVisible(false);
-
-    // this.input.on(
-    //   'pointermove',
-    //   function (pointer) {
-    //     cursor.setVisible(true).setPosition(pointer.x, pointer.y);
-
-    //     this.physics.moveToObject(this.monkey, pointer, 60);
-    //   },
-    //   this
-    // );
   }
 
   update() {
@@ -259,7 +239,8 @@ export default class MyGame extends Phaser.Scene {
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
 
     if (justPressedSpace) {
-      this.monkey.setVelocityY(-12);
+      this.monkey.setVelocityY(-15);
+      console.log(this.monkey.x);
     }
   }
 }
