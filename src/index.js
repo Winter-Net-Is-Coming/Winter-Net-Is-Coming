@@ -32,11 +32,12 @@ import MyGame from './scenes/MyGame';
 const config = {
   type: Phaser.AUTO,
   // parent: 'phaser-example',
-  width: 1000,
+  width: 1200,
   height: 600,
   physics: {
     default: 'matter',
     matter: {
+      gravity: { y: 2 },
       debug: false,
     },
   },
