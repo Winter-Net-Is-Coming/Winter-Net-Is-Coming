@@ -18,6 +18,18 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// POST
+router.post('/signup', async (req, res, next) => {
+  try {
+    const { userName, password } = req.body;
+    const newUser = await User.create({
+      userName,
+      password,
+    });
+    res.json(newUser);
+  } catch (err) {
+    next(err);
+  }
+});
 
-
-module.exports = router
+module.exports = router;
