@@ -15,17 +15,17 @@ export default class MyGame extends Phaser.Scene {
     //load the images and spritesheet for our character
     this.load.atlas(
       'monkey',
-      'public/assets/monkey.png',
-      'public/assets/monkey.json'
+      'assets/monkey.png',
+      'assets/monkey.json'
     );
 
     //loads the tile images for our platforms
-    this.load.image('tiles', 'public/assets/platformersheet.png');
+    this.load.image('tiles', 'assets/platformersheet.png');
     //loads the json files for our tile map
-    this.load.tilemapTiledJSON('tilemap', 'public/assets/levelOne.json');
+    this.load.tilemapTiledJSON('tilemap', 'assets/levelOne.json');
     //loading testblock images
     for (let i = 1; i <= 15; i++) {
-      this.load.image(`block${i}`, `public/assets/blocks/block${i}.png`);
+      this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
     }
   }
 
