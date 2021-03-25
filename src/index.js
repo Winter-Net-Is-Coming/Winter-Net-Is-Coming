@@ -31,7 +31,7 @@ import MyGame from './scenes/MyGame';
 
 const config = {
   type: Phaser.AUTO,
-  // parent: 'phaser-example',
+  parent: 'game',
   width: 1200,
   height: 600,
   physics: {
