@@ -1,21 +1,22 @@
 const router = require('express').Router();
-const { Game } = require('../db/models');
+const { userGameProfile } = require('../db/models');
 
-// GET
+// GET scores
 router.get('/', async (req, res, next) => {
   try {
-    const games = await Game.findAll();
-    res.json(games);
+    const scores = await userGameProfile.findAll();
+    res.json(scores);
   } catch (err) {
     next(err);
   }
 });
 
-// POST
+// POST scores
+
 router.post('/', async (req, res, next) => {
   try {
-    const game = await Game.create(req.body);
-    res.json(game);
+    const score = await userGmaeProfile.create(req.body);
+    res.json(score);
   } catch (err) {
     next(err);
   }
