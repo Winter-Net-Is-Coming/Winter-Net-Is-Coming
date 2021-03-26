@@ -6,20 +6,39 @@ const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 let config
 
 if (process.env.DATABASE_URL) {
+
   config = {
     logging: false,
+    operatorsAliases: false,
+    dialect: "postgres",
+    protocol: "postgres",
     ssl: true,
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
-    }
+        rejectUnauthorized: false,
+      },
+    },
   }
 } else {
   config = {
-    logging: false
+    logging: false,
+    operatorsAliases: false,
   }
+//   config = {
+//     logging: false,
+//     ssl: true,
+//     dialectOptions: {
+//       ssl: {
+//         require: true,
+//         rejectUnauthorized: false
+//       }
+//     }
+//   }
+// } else {
+//   config = {
+//     logging: false
+//   }
 }
 
 const db = new Sequelize(
