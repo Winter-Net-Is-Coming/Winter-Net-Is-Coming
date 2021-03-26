@@ -102,8 +102,8 @@ export default class MyGame extends Phaser.Scene {
 
     ////BUBBLE SORT ////
     this.add.text(
-      941,
-      1811,
+      886,
+      2000,
       `Stack these blocks from shortest to tallest!\n
       Start by moving the tallest block in each pair to the right`,
       {
@@ -161,6 +161,18 @@ export default class MyGame extends Phaser.Scene {
     });
 
     // MERGE SORT ///
+
+    this.add.text(
+      3478,
+      850,
+      `Sort this in two halves!\n
+      Sort the first half of blocks \n
+      then the second half\n
+      and then put it all together!`,
+      {
+        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      }
+    );
     this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
@@ -169,7 +181,7 @@ export default class MyGame extends Phaser.Scene {
         window.alert('Thats right!');
         block10.input.draggable = false;
         block14.input.draggable = true;
-      } else if (currentBlock === 'block14' && xPos > 4105 && xPos < 4115) {
+      } else if (currentBlock === 'block14' && xPos > 4105 && xPos < 4200) {
         window.alert('Thats right!');
         block14.input.draggable = false;
         block12.input.draggable = true;
@@ -191,6 +203,7 @@ export default class MyGame extends Phaser.Scene {
       }
     });
 
+    //victory coordinates 705 6293
     this.cameras.main.startFollow(this.monkey);
     this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
     this.cameras.main.zoom = 0.75;
@@ -217,10 +230,17 @@ export default class MyGame extends Phaser.Scene {
     }
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-
+    //
     if (justPressedSpace && this.monkey.body.velocity.y === 0) {
-      console.log(this.monkey.body.velocity.y);
+      this.monkey.play('jump', true);
       this.monkey.setVelocityY(-15);
+    }
+
+    if (this.monkey.x > 6000) {
+      this.monkey.play('celebrate', true);
+      this.registry.destroy(); // destroy registry
+      this.events.off(); // disable all active events
+      this.scene.restart();
     }
   }
 
@@ -246,11 +266,16 @@ export default class MyGame extends Phaser.Scene {
         frameRate: 10,
         frames: this.anims.generateFrameNames('monkey', {
           start: 1,
-          end: 4,
-          prefix: 'monkey_jump_',
+          end: 3,
+          prefix: 'monkey_jump_swing_',
           suffix: '.png',
         }),
         repeat: -1,
+      }),
+      this.anims.create({
+        key: 'celebrate',
+        frameRate: 10,
+        frames: [{ key: 'monkey', frame: 'monkey_armsup_happy.png' }],
       });
   }
 }
