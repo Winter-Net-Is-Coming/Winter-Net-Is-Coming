@@ -11,17 +11,12 @@ export default class MyGame extends Phaser.Scene {
   }
 
   preload() {
-    this.load.atlas(
-      'monkey',
-      'assets/monkey.png',
-      'assets/monkey.json'
-    );
+    this.load.atlas('monkey', 'assets/monkey.png', 'assets/monkey.json');
 
-    //loads the tile images for our platforms
     this.load.image('tiles', 'assets/platformersheet.png');
-    //loads the json files for our tile map
+
     this.load.tilemapTiledJSON('tilemap', 'assets/levelOne.json');
-    //loading testblock images
+
     for (let i = 1; i <= 15; i++) {
       this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
     }
@@ -49,13 +44,11 @@ export default class MyGame extends Phaser.Scene {
 
     this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
 
-    // this.dropZTwo = this.zone.renderZone(680, 1800, 200, 1000);
+    this.dropZTwo = this.zone.renderZone(1780, 1800, 600, 1100);
 
-    // this.dropZThree = this.zone.renderZone(570, 1800, 200, 1000);
+    this.dropZThree = this.zone.renderZone(4267, 2200, 600, 2200);
 
-    this.dropZFour = this.zone.renderZone(1780, 1800, 600, 1100);
-
-    this.outlineOne = this.zone.renderOutline(this.dropZFour, 0xff09d2);
+    // this.outlineOne = this.zone.renderOutline(this.dropZThree, 0xff09d2);
     // this.outlineTwo = this.zone.renderOutline(this.dropZTwo, 0xff09d2);
     // this.outlineThree = this.zone.renderOutline(this.dropZThree, 0xff09d2);
     // overall zone 750, 2100, 700, 1200
@@ -66,9 +59,9 @@ export default class MyGame extends Phaser.Scene {
       .setFixedRotation();
 
     const block4 = this.generateBlock(490, 1900, 'block4');
-    const block2 = this.generateBlock(block4.x + 125, 1900, 'block2');
-    const block1 = this.generateBlock(block2.x + 125, 1900, 'block1');
-    const block3 = this.generateBlock(block1.x + 125, 1900, 'block3');
+    const block2 = this.generateBlock(block4.x + 105, 1900, 'block2');
+    const block1 = this.generateBlock(block2.x + 105, 1900, 'block1');
+    const block3 = this.generateBlock(block1.x + 105, 1900, 'block3');
 
     const block7 = this.generateBlock(1520, 1800, 'block7');
     const block6 = this.generateBlock(block7.x + 120, 1800, 'block6');
@@ -77,14 +70,15 @@ export default class MyGame extends Phaser.Scene {
     const block8 = this.generateBlock(block9.x + 120, 1800, 'block8');
 
     const block15 = this.generateBlock(4028, 1600, 'block15');
-    const block10 = this.generateBlock(block15.x + 120, 1600, 'block10');
-    const block14 = this.generateBlock(block10.x + 120, 1600, 'block14');
-    const block11 = this.generateBlock(block14.x + 120, 1600, 'block11');
-    const block13 = this.generateBlock(block11.x + 120, 1600, 'block13');
-    const block12 = this.generateBlock(block13.x + 120, 1600, 'block12');
+    const block10 = this.generateBlock(block15.x + 80, 1600, 'block10');
+    const block14 = this.generateBlock(block10.x + 80, 1600, 'block14');
+    const block11 = this.generateBlock(block14.x + 80, 1600, 'block11');
+    const block13 = this.generateBlock(block11.x + 80, 1600, 'block13');
+    const block12 = this.generateBlock(block13.x + 80, 1600, 'block12');
 
     this.input.setDraggable(block4, true);
     this.input.setDraggable(block6, true);
+    this.input.setDraggable(block10, true);
 
     this.input.dragDistanceThreshold = 0;
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -92,10 +86,10 @@ export default class MyGame extends Phaser.Scene {
       gameObject.y = dragY;
     });
 
-    this.input.on('drag', function (pointer, gameObject) {
-      // console.log('X', gameObject.x, 'Y', gameObject.y);
-      //console.log(gameObject.x);
-    });
+    // this.input.on('drag', function (pointer, gameObject) {
+    //   // console.log('X', gameObject.x, 'Y', gameObject.y);
+    //   //console.log(gameObject.x);
+    // });
 
     this.input.on('dragend', function (pointer, gameObject, dropped) {
       //while dragging, when dropped, return object back to original starting pos.
@@ -106,38 +100,51 @@ export default class MyGame extends Phaser.Scene {
       // console.log(gameObject.texture.key, gameObject.x, gameObject.y);
     });
 
-    this.input.on('dragend', function (pointer, gameObject, dropped) {
+    ////BUBBLE SORT ////
+    this.add.text(
+      886,
+      2000,
+      `Stack these blocks from shortest to tallest!\n
+      Start by moving the tallest block in each pair to the right`,
+      {
+        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      }
+    );
+
+    this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
-
       let xPos = gameObject.x;
-      console.log(xPos);
-      console.log(gameObject);
 
-      if (currentBlock === 'block4' && xPos > 609 && xPos < 635) {
+      if (currentBlock === 'block4' && xPos > 589 && xPos < 600) {
         window.alert('Thats right!');
         // if its the wrong move we reset it
-      } else if (currentBlock === 'block4' && xPos > 720 && xPos < 750) {
+      } else if (currentBlock === 'block4' && xPos > 680 && xPos < 690) {
         window.alert('Thats right!');
-      } else if (currentBlock === 'block4' && xPos > 810 && xPos < 850) {
+      } else if (currentBlock === 'block4' && xPos > 780 && xPos < 790) {
         window.alert('Thats right!');
         block4.input.draggable = false;
         block2.input.draggable = true;
-      } else if (currentBlock === 'block2' && xPos > 600 && xPos < 630) {
+      } else if (currentBlock === 'block2' && xPos > 585 && xPos < 595) {
         window.alert('Thats right! Good job solving your first bubble sort!');
         block2.input.draggable = false;
       }
     });
-    // adding tests for body/bounce
-    // this.matter.world.setFPS(120);
-    // this.body.setBounce(1);
 
     /////////INSERTION SORT //////////////
+    this.add.text(
+      837,
+      1150,
+      `To the left to the left!\n
+      Sort the blocks by moving the \n
+      shortest blocks to the left.`,
+      {
+        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      }
+    );
+
     this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
-
       let xPos = gameObject.x;
-      console.log(xPos);
-      console.log(gameObject);
 
       if (currentBlock === 'block6' && xPos > 1360 && xPos < 1600) {
         window.alert('Thats right!');
@@ -153,48 +160,87 @@ export default class MyGame extends Phaser.Scene {
       }
     });
 
+    // MERGE SORT ///
+
+    this.add.text(
+      3478,
+      850,
+      `Sort this in two halves!\n
+      Sort the first half of blocks \n
+      then the second half\n
+      and then put it all together!`,
+      {
+        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      }
+    );
+    this.input.on('dragend', function (pointer, gameObject) {
+      let currentBlock = gameObject.texture.key;
+      let xPos = gameObject.x;
+
+      if (currentBlock === 'block10' && xPos > 4000 && xPos < 4051) {
+        window.alert('Thats right!');
+        block10.input.draggable = false;
+        block14.input.draggable = true;
+      } else if (currentBlock === 'block14' && xPos > 4105 && xPos < 4200) {
+        window.alert('Thats right!');
+        block14.input.draggable = false;
+        block12.input.draggable = true;
+      } else if (currentBlock === 'block12' && xPos > 4372 && xPos < 4432) {
+        window.alert('Thats right!');
+        block12.input.draggable = false;
+        block11.input.draggable = true;
+      } else if (currentBlock === 'block11' && xPos > 4110 && xPos < 4120) {
+        window.alert('Thats right!');
+        block11.input.draggable = false;
+        block12.input.draggable = true;
+      } else if (currentBlock === 'block12' && xPos > 4185 && xPos < 4225) {
+        window.alert('Thats right!');
+        block12.input.draggable = false;
+        block13.input.draggable = true;
+      } else if (currentBlock === 'block13' && xPos > 4296 && xPos < 4308) {
+        window.alert('Congratulations on solving merge sort!');
+        block13.input.draggable = false;
+      }
+    });
+
+    //victory coordinates 705 6293
     this.cameras.main.startFollow(this.monkey);
-    // this.cameras.main.setBounds (0, 0, 1920 * 2, 1080 * 2);
-    // this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
+    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
+    this.cameras.main.zoom = 0.75;
+    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
 
-    // set the monkey animation
     this.createMonkeyAnimations();
-
-    //adding cursor movement
-    // const cursor = this.add.image(0, 0, 'cursor').setVisible(false);
-
-    // this.input.on(
-    //   'pointermove',
-    //   function (pointer) {
-    //     cursor.setVisible(true).setPosition(pointer.x, pointer.y);
-
-    //     this.physics.moveToObject(this.monkey, pointer, 60);
-    //   },
-    //   this
-    // );
   }
 
   update() {
-    //moves our character left, right, and jumping
-    const speed = 4;
+    const speed = 15;
+    let monkey = this.monkey;
 
     if (this.cursors.left.isDown) {
-      this.monkey.flipX = true;
-      this.monkey.setVelocityX(-speed);
-      this.monkey.play('run', true);
+      monkey.flipX = true;
+      monkey.setVelocityX(-speed);
+      monkey.play('run', true);
     } else if (this.cursors.right.isDown) {
-      this.monkey.flipX = false;
-      this.monkey.setVelocityX(speed);
-      this.monkey.play('run', true);
+      monkey.flipX = false;
+      monkey.setVelocityX(speed);
+      monkey.play('run', true);
     } else {
-      this.monkey.setVelocityX(0);
-      this.monkey.play('idle', true);
+      monkey.setVelocityX(0);
+      monkey.play('idle', true);
     }
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-
-    if (justPressedSpace) {
+    //
+    if (justPressedSpace && this.monkey.body.velocity.y === 0) {
+      this.monkey.play('jump', true);
       this.monkey.setVelocityY(-15);
+    }
+
+    if (this.monkey.x > 6000) {
+      this.monkey.play('celebrate', true);
+      this.registry.destroy(); // destroy registry
+      this.events.off(); // disable all active events
+      this.scene.restart();
     }
   }
 
@@ -220,17 +266,16 @@ export default class MyGame extends Phaser.Scene {
         frameRate: 10,
         frames: this.anims.generateFrameNames('monkey', {
           start: 1,
-          end: 4,
-          prefix: 'monkey_jump_',
+          end: 3,
+          prefix: 'monkey_jump_swing_',
           suffix: '.png',
         }),
         repeat: -1,
+      }),
+      this.anims.create({
+        key: 'celebrate',
+        frameRate: 10,
+        frames: [{ key: 'monkey', frame: 'monkey_armsup_happy.png' }],
       });
   }
 }
-
-// //INSERTION SORT
-//  [] Make the drop zone prevent user from dragging block foreword
-//  [] Enable drag for the block in question
-//  [] Drag to proper position, then disable drag.
-//  [] Enable drag for block that is 'next in line'
