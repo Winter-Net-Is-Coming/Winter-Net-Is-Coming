@@ -9,7 +9,7 @@ if (process.env.DATABASE_URL) {
 
   config = {
     logging: false,
-    //operatorsAliases: false,
+    operatorsAliases: false,
     dialect: "postgres",
     protocol: "postgres",
     ssl: true,
@@ -23,7 +23,7 @@ if (process.env.DATABASE_URL) {
 } else {
   config = {
     logging: false,
-   // operatorsAliases: false,
+   operatorsAliases: false,
   }
 //   config = {
 //     logging: false,
