@@ -4,7 +4,7 @@
   "description": "A Phaser 3 Project Template",
   "main": "src/index.js",
   "engines": {
-    "node": "~12.11.1"
+    "node": "~14.15.4"
   },
   "scripts": {
     "build": "webpack",
