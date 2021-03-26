@@ -1,12 +1,19 @@
 {
-  "name": "phaser3-project-template",
-  "version": "1.1.2",
+  "name": "algosort",
+  "version": "1.0.0",
   "description": "A Phaser 3 Project Template",
   "main": "src/index.js",
+  "engines": {
+    "node": "~14.15.4"
+  },
   "scripts": {
     "build": "webpack",
     "build-client-watch": "webpack -w",
-    "start": "node index.js",
+    "deploy": "script/deploy",
+    "heroku-token": "script/encrypt-heroku-auth-token.js",
+    "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
+    "postinstall": "touch secrets.js",
+    "start": "node server/index.js",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "seed": "node script/seed.js"
@@ -79,6 +86,7 @@
     "passport-google-oauth": "^2.0.0",
     "pg": "^8.3.2",
     "pg-hstore": "^2.3.2",
+    "pg-native": "^3.0.0",
     "phaser": "^3.53.1",
     "sequelize": "^5.3.1",
     "socket.io": "^2.2.0",
