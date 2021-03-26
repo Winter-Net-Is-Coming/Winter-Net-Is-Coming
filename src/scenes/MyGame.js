@@ -111,7 +111,7 @@ export default class MyGame extends Phaser.Scene {
       }
     );
 
-    this.input.on('dragend', function (pointer, gameObject, dropped) {
+    this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
 
@@ -132,7 +132,7 @@ export default class MyGame extends Phaser.Scene {
 
     /////////INSERTION SORT //////////////
     this.add.text(
-      1037,
+      837,
       1150,
       `To the left to the left!\n
       Sort the blocks by moving the \n
@@ -198,7 +198,7 @@ export default class MyGame extends Phaser.Scene {
         block12.input.draggable = false;
         block13.input.draggable = true;
       } else if (currentBlock === 'block13' && xPos > 4296 && xPos < 4308) {
-        window.alert('Would be funny if we actually got this right');
+        window.alert('Congratulations on solving merge sort!');
         block13.input.draggable = false;
       }
     });
