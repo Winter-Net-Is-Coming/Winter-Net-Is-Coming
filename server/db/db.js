@@ -25,20 +25,6 @@ if (process.env.DATABASE_URL) {
     logging: false,
     operatorsAliases: false,
   };
-  //   config = {
-  //     logging: false,
-  //     ssl: true,
-  //     dialectOptions: {
-  //       ssl: {
-  //         require: true,
-  //         rejectUnauthorized: false
-  //       }
-  //     }
-  //   }
-  // } else {
-  //   config = {
-  //     logging: false
-  //   }
 }
 
 const db = new Sequelize(
