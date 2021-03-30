@@ -23,6 +23,7 @@ export default class MyGame extends Phaser.Scene {
   }
 
   generateBlock(x, y, blockName) {
+    console.log("HII PT.2");
     return this.matter.add
       .image(x, y, blockName)
       .setInteractive()
@@ -42,13 +43,19 @@ export default class MyGame extends Phaser.Scene {
     //adding test zone
     this.zone = new Zone(this);
 
+    //this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
+
     this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
-
     this.dropZTwo = this.zone.renderZone(1780, 1800, 600, 1100);
-
     this.dropZThree = this.zone.renderZone(4267, 2200, 600, 2200);
 
-    // this.outlineOne = this.zone.renderOutline(this.dropZThree, 0xff09d2);
+    //this.dropZTwo = this.zone.renderZone(680, 1800, 200, 1000);
+
+    //this.dropZThree = this.zone.renderZone(570, 1800, 200, 1000);
+
+    //this.dropZFour = this.zone.renderZone(1780, 1800, 600, 1100);
+
+    //this.outlineOne = this.zone.renderOutline(this.dropZFour, 0xff09d2);
     // this.outlineTwo = this.zone.renderOutline(this.dropZTwo, 0xff09d2);
     // this.outlineThree = this.zone.renderOutline(this.dropZThree, 0xff09d2);
     // overall zone 750, 2100, 700, 1200
@@ -80,12 +87,26 @@ export default class MyGame extends Phaser.Scene {
     this.input.setDraggable(block6, true);
     this.input.setDraggable(block10, true);
 
+<<<<<<< HEAD
     // this.input.dragDistanceThreshold = 0;
+=======
+    this.input.setDraggable(block10, true);
+
+    this.input.dragDistanceThreshold = 0;
+>>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
       gameObject.x = dragX;
       gameObject.y = dragY;
     });
 
+<<<<<<< HEAD
+=======
+    // this.input.on('drag', function (pointer, gameObject) {
+    //   // console.log('X', gameObject.x, 'Y', gameObject.y);
+    //   //console.log(gameObject.x);
+    // });
+
+>>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
     this.input.on('dragend', function (pointer, gameObject, dropped) {
       //while dragging, when dropped, return object back to original starting pos.
       if (!dropped) {
@@ -139,6 +160,7 @@ export default class MyGame extends Phaser.Scene {
 
     this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
+      console.log(currentBlock);
       let xPos = gameObject.x;
 
       if (currentBlock === 'block6' && xPos > 1360 && xPos < 1600) {
@@ -154,9 +176,39 @@ export default class MyGame extends Phaser.Scene {
         block8.input.draggable = false;
       }
     });
+    /////////
+    this.input.on('dragend', function (pointer, gameObject) {
+      let currentBlock = gameObject.texture.key;
+      let xPos = gameObject.x;
+      if (currentBlock === 'block10' && xPos > 4000 && xPos < 4051) {
+        window.alert('Thats right!');
+        block10.input.draggable = false;
+        block14.input.draggable = true;
+      } else if (currentBlock === 'block14' && xPos > 4105 && xPos < 4200) {
+        window.alert('Thats right!');
+        block14.input.draggable = false;
+        block12.input.draggable = true;
+      } else if (currentBlock === 'block12' && xPos > 4372 && xPos < 4432) {
+        window.alert('Thats right!');
+        block12.input.draggable = false;
+        block11.input.draggable = true;
+      } else if (currentBlock === 'block11' && xPos > 4110 && xPos < 4120) {
+        window.alert('Thats right!');
+        block11.input.draggable = false;
+        block12.input.draggable = true;
+      } else if (currentBlock === 'block12' && xPos > 4185 && xPos < 4225) {
+        window.alert('Thats right!');
+        block12.input.draggable = false;
+        block13.input.draggable = true;
+      } else if (currentBlock === 'block13' && xPos > 4296 && xPos < 4308) {
+        window.alert('Congratulations on solving merge sort!');
+        block13.input.draggable = false;
+      }
+    });
 
-    // MERGE SORT ///
+    ///////////
 
+<<<<<<< HEAD
     this.add.text(
       3478,
       850,
@@ -172,6 +224,24 @@ export default class MyGame extends Phaser.Scene {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
 
+=======
+    this.cameras.main.startFollow(this.monkey);
+    // this.cameras.main.setBounds (0, 0, 1920 * 2, 1080 * 2);
+    // this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
+
+    // set the monkey animation
+    //this.createMonkeyAnimations();
+
+    this.cameras.main.startFollow(this.monkey);
+    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
+    this.cameras.main.zoom = 0.75;
+    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
+    this.createMonkeyAnimations();
+
+    this.input.on('dragend', function (pointer, gameObject) {
+      let currentBlock = gameObject.texture.key;
+      let xPos = gameObject.x;
+>>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
       if (currentBlock === 'block10' && xPos > 4000 && xPos < 4051) {
         window.alert('Thats right!');
         block10.input.draggable = false;
@@ -208,9 +278,9 @@ export default class MyGame extends Phaser.Scene {
   }
 
   update() {
-    const speed = 15;
-    let monkey = this.monkey;
-
+    //moves our character left, right, and jumping
+    const speed = 20;
+    const monkey = this.monkey;
     if (this.cursors.left.isDown) {
       monkey.flipX = true;
       monkey.setVelocityX(-speed);
@@ -224,12 +294,18 @@ export default class MyGame extends Phaser.Scene {
       monkey.play('idle', true);
     }
 
+    // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
+
+    // if (justPressedSpace) {
+    //   this.monkey.setVelocityY(-15);
+    // }
+
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-    //
     if (justPressedSpace && this.monkey.body.velocity.y === 0) {
       this.monkey.play('jump', true);
       this.monkey.setVelocityY(-15);
     }
+<<<<<<< HEAD
 
     if (this.monkey.x > 6000) {
       this.monkey.play('celebrate', true);
@@ -237,6 +313,8 @@ export default class MyGame extends Phaser.Scene {
       this.events.off(); // disable all active events
       this.scene.restart();
     }
+=======
+>>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
   }
 
   createMonkeyAnimations() {
@@ -274,3 +352,10 @@ export default class MyGame extends Phaser.Scene {
       });
   }
 }
+
+// //INSERTION SORT
+//  [] Make the drop zone prevent user from dragging block foreword
+//  [] Enable drag for the block in question
+//  [] Drag to proper position, then disable drag.
+//  [] Enable drag for block that is 'next in line'
+//
