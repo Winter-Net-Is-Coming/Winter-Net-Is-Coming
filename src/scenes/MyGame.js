@@ -23,6 +23,7 @@ export default class MyGame extends Phaser.Scene {
   }
 
   generateBlock(x, y, blockName) {
+    console.log("HII PT.2");
     return this.matter.add
       .image(x, y, blockName)
       .setInteractive()
@@ -152,6 +153,7 @@ export default class MyGame extends Phaser.Scene {
 
     this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
+      console.log(currentBlock);
       let xPos = gameObject.x;
 
       if (currentBlock === 'block6' && xPos > 1360 && xPos < 1600) {
