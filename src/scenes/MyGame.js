@@ -23,7 +23,7 @@ export default class MyGame extends Phaser.Scene {
   }
 
   generateBlock(x, y, blockName) {
-    console.log("HII PT.2");
+    console.log('HII PT.2');
     return this.matter.add
       .image(x, y, blockName)
       .setInteractive()
@@ -87,26 +87,19 @@ export default class MyGame extends Phaser.Scene {
     this.input.setDraggable(block6, true);
     this.input.setDraggable(block10, true);
 
-<<<<<<< HEAD
-    // this.input.dragDistanceThreshold = 0;
-=======
     this.input.setDraggable(block10, true);
 
     this.input.dragDistanceThreshold = 0;
->>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
       gameObject.x = dragX;
       gameObject.y = dragY;
     });
 
-<<<<<<< HEAD
-=======
     // this.input.on('drag', function (pointer, gameObject) {
     //   // console.log('X', gameObject.x, 'Y', gameObject.y);
     //   //console.log(gameObject.x);
     // });
 
->>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
     this.input.on('dragend', function (pointer, gameObject, dropped) {
       //while dragging, when dropped, return object back to original starting pos.
       if (!dropped) {
@@ -208,23 +201,6 @@ export default class MyGame extends Phaser.Scene {
 
     ///////////
 
-<<<<<<< HEAD
-    this.add.text(
-      3478,
-      850,
-      `Sort this in two halves!\n
-      Sort the first half of blocks \n
-      then the second half\n
-      and then put it all together!`,
-      {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      }
-    );
-    this.input.on('dragend', function (pointer, gameObject) {
-      let currentBlock = gameObject.texture.key;
-      let xPos = gameObject.x;
-
-=======
     this.cameras.main.startFollow(this.monkey);
     // this.cameras.main.setBounds (0, 0, 1920 * 2, 1080 * 2);
     // this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
@@ -241,7 +217,6 @@ export default class MyGame extends Phaser.Scene {
     this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
->>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
       if (currentBlock === 'block10' && xPos > 4000 && xPos < 4051) {
         window.alert('Thats right!');
         block10.input.draggable = false;
@@ -305,16 +280,6 @@ export default class MyGame extends Phaser.Scene {
       this.monkey.play('jump', true);
       this.monkey.setVelocityY(-15);
     }
-<<<<<<< HEAD
-
-    if (this.monkey.x > 6000) {
-      this.monkey.play('celebrate', true);
-      this.registry.destroy(); // destroy registry
-      this.events.off(); // disable all active events
-      this.scene.restart();
-    }
-=======
->>>>>>> 8bcf566ad68e436028f42462e259b9696058bf74
   }
 
   createMonkeyAnimations() {
