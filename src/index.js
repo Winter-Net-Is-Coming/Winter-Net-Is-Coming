@@ -1,6 +1,6 @@
-import Phaser from 'phaser';
+import Phaser from "phaser";
 
-import MyGame from './scenes/MyGame';
+import MyGame from "./scenes/MyGame";
 
 // class MyGame extends Phaser.Scene
 // {
@@ -31,19 +31,18 @@ import MyGame from './scenes/MyGame';
 
 const config = {
   type: Phaser.AUTO,
-  parent: 'game',
-  dom : {
-    createContainer : true,
+  parent: "game",
+  dom: {
+    createContainer: true,
   },
   width: 1200,
   height: 600,
   autoCenter: true,
   physics: {
-    default: 'matter',
+    default: "matter",
     matter: {
       gravity: { y: 2 },
       debug: false,
-      gravity: { y: 2 },
     },
   },
   scene: [MyGame],
