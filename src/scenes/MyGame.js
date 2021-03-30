@@ -47,15 +47,19 @@ export default class MyGame extends Phaser.Scene {
     //adding test zone
     this.zone = new Zone(this);
 
+    //this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
+
     this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
+    this.dropZTwo = this.zone.renderZone(1780, 1800, 600, 1100);
+    this.dropZThree = this.zone.renderZone(4267, 2200, 600, 2200);
 
-    // this.dropZTwo = this.zone.renderZone(680, 1800, 200, 1000);
+     //this.dropZTwo = this.zone.renderZone(680, 1800, 200, 1000);
 
-    // this.dropZThree = this.zone.renderZone(570, 1800, 200, 1000);
+     //this.dropZThree = this.zone.renderZone(570, 1800, 200, 1000);
 
-    this.dropZFour = this.zone.renderZone(1780, 1800, 600, 1100);
+    //this.dropZFour = this.zone.renderZone(1780, 1800, 600, 1100);
 
-    this.outlineOne = this.zone.renderOutline(this.dropZFour, 0xff09d2);
+    //this.outlineOne = this.zone.renderOutline(this.dropZFour, 0xff09d2);
     // this.outlineTwo = this.zone.renderOutline(this.dropZTwo, 0xff09d2);
     // this.outlineThree = this.zone.renderOutline(this.dropZThree, 0xff09d2);
     // overall zone 750, 2100, 700, 1200
@@ -85,6 +89,8 @@ export default class MyGame extends Phaser.Scene {
 
     this.input.setDraggable(block4, true);
     this.input.setDraggable(block6, true);
+
+    this.input.setDraggable(block10, true);
 
     this.input.dragDistanceThreshold = 0;
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -152,12 +158,55 @@ export default class MyGame extends Phaser.Scene {
         block8.input.draggable = false;
       }
     });
+    /////////
+    this.input.on("dragend", function (pointer, gameObject) {
+      let currentBlock = gameObject.texture.key;
+      let xPos = gameObject.x;
+      if (currentBlock === "block10" && xPos > 4000 && xPos < 4051) {
+        window.alert("Thats right!");
+        block10.input.draggable = false;
+        block14.input.draggable = true;
+      } else if (currentBlock === "block14" && xPos > 4105 && xPos < 4200) {
+        window.alert("Thats right!");
+        block14.input.draggable = false;
+        block12.input.draggable = true;
+      } else if (currentBlock === "block12" && xPos > 4372 && xPos < 4432) {
+        window.alert("Thats right!");
+        block12.input.draggable = false;
+        block11.input.draggable = true;
+      } else if (currentBlock === "block11" && xPos > 4110 && xPos < 4120) {
+        window.alert("Thats right!");
+        block11.input.draggable = false;
+        block12.input.draggable = true;
+      } else if (currentBlock === "block12" && xPos > 4185 && xPos < 4225) {
+        window.alert("Thats right!");
+        block12.input.draggable = false;
+        block13.input.draggable = true;
+      } else if (currentBlock === "block13" && xPos > 4296 && xPos < 4308) {
+        window.alert("Congratulations on solving merge sort!");
+        block13.input.draggable = false;
+      }
+    });
+
+
+
+
+
+
+    ///////////
 
     this.cameras.main.startFollow(this.monkey);
     // this.cameras.main.setBounds (0, 0, 1920 * 2, 1080 * 2);
     // this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
 
     // set the monkey animation
+    //this.createMonkeyAnimations();
+
+
+    this.cameras.main.startFollow(this.monkey);
+    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
+    this.cameras.main.zoom = 0.75;
+    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
     this.createMonkeyAnimations();
 
     //adding cursor movement
@@ -176,7 +225,7 @@ export default class MyGame extends Phaser.Scene {
 
   update() {
     //moves our character left, right, and jumping
-    const speed = 4;
+    const speed = 20;
 
     if (this.cursors.left.isDown) {
       this.monkey.flipX = true;
@@ -191,11 +240,17 @@ export default class MyGame extends Phaser.Scene {
       this.monkey.play('idle', true);
     }
 
-    const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
+    // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
 
-    if (justPressedSpace) {
-      this.monkey.setVelocityY(-15);
-    }
+    // if (justPressedSpace) {
+    //   this.monkey.setVelocityY(-15);
+    // }
+
+    const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);    
+    if (justPressedSpace && this.monkey.body.velocity.y === 0) 
+    {      this.monkey.play("jump", true);     
+            this.monkey.setVelocityY(-15);   
+           }
   }
 
   createMonkeyAnimations() {
