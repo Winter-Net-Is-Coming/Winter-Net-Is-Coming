@@ -49,24 +49,6 @@ export default class MyGame extends Phaser.Scene {
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountdownFinished.bind(this));
 
-    // this.initialTime = 300;
-
-    // this.timeText = this.add.text(
-    //   32,
-    //   32,
-    //   'Time Limit: ' + this.formatTime(this.initialTime),
-    //   { fontSize: '50px', fill: '#ffffff' }
-    // );
-
-    // this.timeText.setScrollFactor(0);
-
-    // this.timedEvent = this.time.addEvent({
-    //   delay: 1000,
-    //   callback: this.onEvent,
-    //   callbackScope: this,
-    //   loop: true,
-    // });
-
     //adding test zone
     this.zone = new Zone(this);
 
@@ -310,21 +292,6 @@ export default class MyGame extends Phaser.Scene {
     //   this.monkey.setVelocityY(-15);
     // }
   }
-
-  // formatTime(seconds) {
-  //   var minutes = Math.floor(seconds / 60);
-
-  //   var partInSeconds = seconds % 60;
-
-  //   partInSeconds = partInSeconds.toString().padStart(2, '0');
-
-  //   return `${minutes}:${partInSeconds}`;
-  // }
-
-  // onEvent() {
-  //   this.initialTime -= 1; // One second
-  //   this.timeText.setText('Time Limit: ' + this.formatTime(this.initialTime));
-  // }
 
   handleCountdownFinished() {
     this.monkey.active = false;
