@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
+import CountdownController from '../entity/CountdownController';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -39,23 +40,32 @@ export default class MyGame extends Phaser.Scene {
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
 
-    this.initialTime = 300;
+    const { width, height } = this.scale;
+    const timerLabel = this.add
+      .text(width * 0.5, 50, '45', { fontSize: 48 })
+      .setOrigin(0.5);
 
-    this.timeText = this.add.text(
-      32,
-      32,
-      'Time Limit: ' + this.formatTime(this.initialTime),
-      { fontSize: '50px', fill: '#ffffff' }
-    );
+    timerLabel.setScrollFactor(0);
+    this.countdown = new CountdownController(this, timerLabel);
+    this.countdown.start(this.handleCountdownFinished.bind(this));
 
-    this.timeText.setScrollFactor(0);
+    // this.initialTime = 300;
 
-    this.timedEvent = this.time.addEvent({
-      delay: 1000,
-      callback: this.onEvent,
-      callbackScope: this,
-      loop: true,
-    });
+    // this.timeText = this.add.text(
+    //   32,
+    //   32,
+    //   'Time Limit: ' + this.formatTime(this.initialTime),
+    //   { fontSize: '50px', fill: '#ffffff' }
+    // );
+
+    // this.timeText.setScrollFactor(0);
+
+    // this.timedEvent = this.time.addEvent({
+    //   delay: 1000,
+    //   callback: this.onEvent,
+    //   callbackScope: this,
+    //   loop: true,
+    // });
 
     //adding test zone
     this.zone = new Zone(this);
@@ -292,6 +302,8 @@ export default class MyGame extends Phaser.Scene {
       this.monkey.setVelocityY(-15);
     }
 
+    this.countdown.update();
+
     // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
     // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
     //   this.monkey.play('jump', true);
@@ -299,19 +311,30 @@ export default class MyGame extends Phaser.Scene {
     // }
   }
 
-  formatTime(seconds) {
-    var minutes = Math.floor(seconds / 60);
+  // formatTime(seconds) {
+  //   var minutes = Math.floor(seconds / 60);
 
-    var partInSeconds = seconds % 60;
+  //   var partInSeconds = seconds % 60;
 
-    partInSeconds = partInSeconds.toString().padStart(2, '0');
+  //   partInSeconds = partInSeconds.toString().padStart(2, '0');
 
-    return `${minutes}:${partInSeconds}`;
-  }
+  //   return `${minutes}:${partInSeconds}`;
+  // }
 
-  onEvent() {
-    this.initialTime -= 1; // One second
-    this.timeText.setText('Time Limit: ' + this.formatTime(this.initialTime));
+  // onEvent() {
+  //   this.initialTime -= 1; // One second
+  //   this.timeText.setText('Time Limit: ' + this.formatTime(this.initialTime));
+  // }
+
+  handleCountdownFinished() {
+    this.monkey.active = false;
+    this.monkey.setVelocity(0, 0);
+
+    const { width, height } = this.scale;
+    const lost = this.add
+      .text(width * 0.5, height * 0.5, 'You Lose!', { fontSize: 48 })
+      .setOrigin(0.5);
+    lost.setScrollFactor(0);
   }
 
   createMonkeyAnimations() {
