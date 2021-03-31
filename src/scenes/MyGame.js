@@ -40,9 +40,8 @@ export default class MyGame extends Phaser.Scene {
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
 
-    const { width, height } = this.scale;
     const timerLabel = this.add
-      .text(width * 0.5, 50, '45', { fontSize: 48 })
+      .text(this.scale.width * 0.5, 50, '100', { fontSize: 50 })
       .setOrigin(0.5);
 
     timerLabel.setScrollFactor(0);
