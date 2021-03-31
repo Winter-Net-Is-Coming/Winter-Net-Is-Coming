@@ -14,6 +14,7 @@ export default class MyGame extends Phaser.Scene {
     this.load.atlas('monkey', 'assets/monkey.png', 'assets/monkey.json');
 
     this.load.image('tiles', 'assets/platformersheet.png');
+    this.load.image('tilesbg', 'assets/backgroundColorForest.png');
 
     this.load.tilemapTiledJSON('tilemap', 'assets/levelOne.json');
 
@@ -23,7 +24,6 @@ export default class MyGame extends Phaser.Scene {
   }
 
   generateBlock(x, y, blockName) {
-    console.log("HII PT.2");
     return this.matter.add
       .image(x, y, blockName)
       .setInteractive()
@@ -34,11 +34,13 @@ export default class MyGame extends Phaser.Scene {
     //create map
     const map = this.make.tilemap({ key: 'tilemap' });
     const tileset = map.addTilesetImage('levelOne', 'tiles');
+    const backgroundSet = map.addTilesetImage('forestBackground', 'tilesbg');
     const ground = map.createLayer('ground', tileset);
 
-    const background = map.createLayer('background', tileset);
+    const background = map.createLayer('background', backgroundSet);
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
+    this.matter.world.convertTilemapLayer(background);
 
     //adding test zone
     this.zone = new Zone(this);
@@ -90,6 +92,10 @@ export default class MyGame extends Phaser.Scene {
     this.input.setDraggable(block10, true);
 
     this.input.dragDistanceThreshold = 0;
+    -this.input.on('dragstart', function (pointer, gameObject) {
+      gameObject.setTint(0xff0000);
+    });
+
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
       gameObject.x = dragX;
       gameObject.y = dragY;
@@ -106,7 +112,7 @@ export default class MyGame extends Phaser.Scene {
         gameObject.x = gameObject.input.dragStartX;
         gameObject.y = gameObject.input.dragStartY;
       }
-      // console.log(gameObject.texture.key, gameObject.x, gameObject.y);
+      console.log(gameObject.texture.key, gameObject.x, gameObject.y);
     });
 
     ////BUBBLE SORT ////
