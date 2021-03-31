@@ -23,7 +23,6 @@ export default class MyGame extends Phaser.Scene {
   }
 
   generateBlock(x, y, blockName) {
-    console.log('HII PT.2');
     return this.matter.add
       .image(x, y, blockName)
       .setInteractive()
@@ -39,6 +38,24 @@ export default class MyGame extends Phaser.Scene {
     const background = map.createLayer('background', tileset);
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
+
+    this.initialTime = 300;
+
+    this.timeText = this.add.text(
+      32,
+      32,
+      'Time Limit: ' + this.formatTime(this.initialTime),
+      { fontSize: '50px', fill: '#ffffff' }
+    );
+
+    this.timeText.setScrollFactor(0);
+
+    this.timedEvent = this.time.addEvent({
+      delay: 1000,
+      callback: this.onEvent,
+      callbackScope: this,
+      loop: true,
+    });
 
     //adding test zone
     this.zone = new Zone(this);
@@ -269,17 +286,32 @@ export default class MyGame extends Phaser.Scene {
       monkey.play('idle', true);
     }
 
-    // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-
-    // if (justPressedSpace) {
-    //   this.monkey.setVelocityY(-15);
-    // }
-
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-    if (justPressedSpace && this.monkey.body.velocity.y === 0) {
-      this.monkey.play('jump', true);
+
+    if (justPressedSpace) {
       this.monkey.setVelocityY(-15);
     }
+
+    // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
+    // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
+    //   this.monkey.play('jump', true);
+    //   this.monkey.setVelocityY(-15);
+    // }
+  }
+
+  formatTime(seconds) {
+    var minutes = Math.floor(seconds / 60);
+
+    var partInSeconds = seconds % 60;
+
+    partInSeconds = partInSeconds.toString().padStart(2, '0');
+
+    return `${minutes}:${partInSeconds}`;
+  }
+
+  onEvent() {
+    this.initialTime -= 1; // One second
+    this.timeText.setText('Time Limit: ' + this.formatTime(this.initialTime));
   }
 
   createMonkeyAnimations() {
