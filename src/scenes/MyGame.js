@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
-import CountdownController from '../entity/CountdownController';
+// import CountdownController from '../entity/CountdownController';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -21,6 +21,9 @@ export default class MyGame extends Phaser.Scene {
     for (let i = 1; i <= 15; i++) {
       this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
     }
+
+    this.load.image('energycontainer', 'assets/energycontainer.png');
+    this.load.image('energybar', 'assets/energybar.png');
   }
 
   generateBlock(x, y, blockName) {
@@ -40,13 +43,45 @@ export default class MyGame extends Phaser.Scene {
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
 
-    const timerLabel = this.add
-      .text(this.scale.width * 0.5, 50, '100', { fontSize: 50 })
-      .setOrigin(0.5);
+    let gameOptions = { initialTime: 60 };
+    this.timeLeft = gameOptions.initialTime;
+    let energyContainer = this.add.sprite(
+      this.scale.width / 2,
+      this.scale.height / 2,
+      'energycontainer'
+    );
+    let energyBar = this.add.sprite(
+      energyContainer.x + 46,
+      energyContainer.y,
+      'energybar'
+    );
+    this.energyMask = this.add.sprite(energyBar.x, energyBar.y, 'energybar');
+    this.energyMask.visible = false;
+    energyBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.energyMask);
+    this.gameTimer = this.time.addEvent({
+      delay: 1000,
+      callback: function () {
+        this.timeLeft--;
+        let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
+        this.energyMask.x -= stepWidth;
+        if (this.timeLeft == 0) {
+          this.scene.stop();
+        }
+      },
+      callbackScope: this,
+      loop: true,
+    });
 
-    timerLabel.setScrollFactor(0);
-    this.countdown = new CountdownController(this, timerLabel);
-    this.countdown.start(this.handleCountdownFinished.bind(this));
+    // energyContainer.setScrollFactor();
+    // energyBar.setScrollFactor(0);
+
+    // const timerLabel = this.add
+    //   .text(this.scale.width * 0.5, 50, '100', { fontSize: 50 })
+    //   .setOrigin(0.5);
+
+    // timerLabel.setScrollFactor(0);
+    // this.countdown = new CountdownController(this, timerLabel);
+    // this.countdown.start(this.handleCountdownFinished.bind(this));
 
     //adding test zone
     this.zone = new Zone(this);
@@ -209,19 +244,6 @@ export default class MyGame extends Phaser.Scene {
 
     ///////////
 
-    this.cameras.main.startFollow(this.monkey);
-    // this.cameras.main.setBounds (0, 0, 1920 * 2, 1080 * 2);
-    // this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
-
-    // set the monkey animation
-    //this.createMonkeyAnimations();
-
-    this.cameras.main.startFollow(this.monkey);
-    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
-    this.cameras.main.zoom = 0.75;
-    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
-    this.createMonkeyAnimations();
-
     this.input.on('dragend', function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
@@ -283,7 +305,7 @@ export default class MyGame extends Phaser.Scene {
       this.monkey.setVelocityY(-15);
     }
 
-    this.countdown.update();
+    // this.countdown.update();
 
     // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
     // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
@@ -292,16 +314,16 @@ export default class MyGame extends Phaser.Scene {
     // }
   }
 
-  handleCountdownFinished() {
-    this.monkey.active = false;
-    this.monkey.setVelocity(0, 0);
+  // handleCountdownFinished() {
+  //   this.monkey.active = false;
+  //   this.monkey.setVelocity(0, 0);
 
-    const { width, height } = this.scale;
-    const lost = this.add
-      .text(width * 0.5, height * 0.5, 'You Lose!', { fontSize: 48 })
-      .setOrigin(0.5);
-    lost.setScrollFactor(0);
-  }
+  //   const { width, height } = this.scale;
+  //   const lost = this.add
+  //     .text(width * 0.5, height * 0.5, 'You Lose!', { fontSize: 48 })
+  //     .setOrigin(0.5);
+  //   lost.setScrollFactor(0);
+  // }
 
   createMonkeyAnimations() {
     this.anims.create({
