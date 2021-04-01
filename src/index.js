@@ -1,21 +1,20 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
-import MyGame from "./scenes/MyGame";
- 
+import MyGame from './scenes/MyGame';
+import LevelTwo from './scenes/LevelTwo';
 
 const config = {
   type: Phaser.AUTO,
-  parent: "game",
+  parent: 'game',
   width: 1200,
   height: 600,
   autoCenter: true,
   physics: {
-    default: "matter",
+    default: 'matter',
     matter: {
       gravity: { y: 2 },
- 
-      debug: true,
 
+      debug: true,
     },
   },
   scene: [MyGame],
