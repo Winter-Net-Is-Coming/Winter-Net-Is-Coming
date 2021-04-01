@@ -1,13 +1,11 @@
 import Phaser from "phaser";
 
 import MyGame from "./scenes/MyGame";
+ 
 
 const config = {
   type: Phaser.AUTO,
   parent: "game",
-  // dom : {
-  //   createContainer : true,
-  // },
   width: 1200,
   height: 600,
   autoCenter: true,
@@ -15,7 +13,9 @@ const config = {
     default: "matter",
     matter: {
       gravity: { y: 2 },
+ 
       debug: true,
+
     },
   },
   scene: [MyGame],

@@ -1,3 +1,4 @@
+
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
 
@@ -101,7 +102,7 @@ export default class MyGame extends Phaser.Scene {
       gameObject.y = dragY;
     });
 
-    // this.input.on('drag', function (pointer, gameObject) {
+    // this.input.on("drag", function (pointer, gameObject) {
     //   // console.log('X', gameObject.x, 'Y', gameObject.y);
     //   //console.log(gameObject.x);
     // });
@@ -115,63 +116,87 @@ export default class MyGame extends Phaser.Scene {
       console.log(gameObject.texture.key, gameObject.x, gameObject.y);
     });
 
-    ////BUBBLE SORT ////
-    this.add.text(
-      886,
-      2000,
-      `Stack these blocks from shortest to tallest!\n
-      Start by moving the tallest block in each pair to the right`,
-      {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      }
+    let helper = this.add.text(
+      400,
+      1400,
+      `"Let us start with Bubble Sort!, \nWhich One Of These 2 is Greater?";`,
+      { fontSize: "32px" }
     );
+    ////BUBBLE SORT ////
 
-    this.input.on('dragend', function (pointer, gameObject) {
+
+    block4.setTint(0x00ff00);
+    block2.setTint(0x00ff00);
+    this.input.on("dragend", function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
 
-      if (currentBlock === 'block4' && xPos > 589 && xPos < 600) {
-        window.alert('Thats right!');
+      if (currentBlock === "block4" && xPos > 589 && xPos < 600) {
+        helper.setText("Thats right!, What about these two?");
+
+        block2.setTint(0xffffff);
+        block4.setTint(0x00ff00);
+        block1.setTint(0x00ff00);
         // if its the wrong move we reset it
-      } else if (currentBlock === 'block4' && xPos > 680 && xPos < 690) {
-        window.alert('Thats right!');
-      } else if (currentBlock === 'block4' && xPos > 780 && xPos < 790) {
-        window.alert('Thats right!');
+      } else if (currentBlock === "block4" && xPos > 680 && xPos < 690) {
+        helper.setText("Awesome!, How about these two?");
+        block1.setTint(0xffffff);
+        block4.setTint(0x00ff00);
+        block3.setTint(0x00ff00);
+      } else if (currentBlock === "block4" && xPos > 780 && xPos < 790) {
+        helper.setText("Awesome!, Almost there!");
+        block4.setTint(0xffffff);
+        block3.setTint(0xffffff);
+        block1.setTint(0x00ff00);
+        block2.setTint(0x00ff00);
         block4.input.draggable = false;
         block2.input.draggable = true;
-      } else if (currentBlock === 'block2' && xPos > 585 && xPos < 595) {
-        window.alert('Thats right! Good job solving your first bubble sort!');
+      } else if (currentBlock === "block2" && xPos > 585 && xPos < 595) {
+        block1.setTint(0xffffff);
+        block2.setTint(0xffffff);
+        helper.setText("Awesome!, You got Bubble Sort Correct!");
+
+
         block2.input.draggable = false;
       }
     });
 
     /////////INSERTION SORT //////////////
-    this.add.text(
-      837,
-      1150,
-      `To the left to the left!\n
-      Sort the blocks by moving the \n
-      shortest blocks to the left.`,
-      {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      }
-    );
 
-    this.input.on('dragend', function (pointer, gameObject) {
+    if (this.monkey.x > 200) {
+      helper.setText("Insertion Sort");
+    }
+    console.log(this.monkey.x);
+    block7.setTint(0x00ff00);
+    block6.setTint(0x00ff00);
+    this.input.on("dragend", function (pointer, gameObject) {
+
       let currentBlock = gameObject.texture.key;
       console.log(currentBlock);
       let xPos = gameObject.x;
 
-      if (currentBlock === 'block6' && xPos > 1360 && xPos < 1600) {
-        window.alert('Thats right!');
+
+      if (currentBlock === "block6" && xPos > 1360 && xPos < 1600) {
+        window.alert("Thats right!");
+        block6.setTint(0xffffff);
+        block5.setTint(0x00ff00);
+        block7.setTint(0x00ff00);
+
         block6.input.draggable = false;
         block5.input.draggable = true;
-      } else if (currentBlock === 'block5' && xPos > 1360 && xPos < 1600) {
-        window.alert('Thats right!');
+      } else if (currentBlock === "block5" && xPos > 1360 && xPos < 1600) {
+        window.alert("Thats right!");
+        block6.setTint(0xffffff);
+        block5.setTint(0xffffff);
+        block7.setTint(0xffffff);
+        block8.setTint(0x00ff00);
+        block9.setTint(0x00ff00);
         block5.input.draggable = false;
         block8.input.draggable = true;
-      } else if (currentBlock === 'block8' && xPos > 1820 && xPos < 1895) {
-        window.alert('Congrats on solving insertion sortttttttt!');
+      } else if (currentBlock === "block8" && xPos > 1820 && xPos < 1895) {
+        window.alert("Congrats on solving insertion sortttttttt!");
+        block8.setTint(0xffffff);
+        block9.setTint(0xffffff);
         block8.input.draggable = false;
       }
     });
@@ -262,6 +287,7 @@ export default class MyGame extends Phaser.Scene {
     //moves our character left, right, and jumping
     const speed = 20;
     const monkey = this.monkey;
+
     if (this.cursors.left.isDown) {
       monkey.flipX = true;
       monkey.setVelocityX(-speed);
@@ -282,6 +308,7 @@ export default class MyGame extends Phaser.Scene {
     // }
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
+
     if (justPressedSpace && this.monkey.body.velocity.y === 0) {
       this.monkey.play('jump', true);
       this.monkey.setVelocityY(-15);
