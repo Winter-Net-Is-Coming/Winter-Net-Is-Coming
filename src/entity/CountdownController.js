@@ -6,7 +6,7 @@ export default class CountdownController {
     this.label = label;
   }
 
-  start(callback, duration = 100000) {
+  start(callback, duration = 180000) {
     this.stop();
 
     this.finishedCallback = callback;
