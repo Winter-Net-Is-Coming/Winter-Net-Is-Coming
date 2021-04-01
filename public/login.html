@@ -48,7 +48,7 @@
         };
         $.ajax({
           type: 'POST',
-          url: '/login',
+          url: '/auth/login',
           data,
           success: function (data) {
             window.location.replace('/index.html');
