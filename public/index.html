@@ -16,13 +16,14 @@
         background-color: #e9c46a;
       }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body id="gradient">
     <div class="container">
       <h1>
         <span style="color: green">AL goes Exploring</span>
 
-        <div class="row float-right">
+        <div id="login-container" class="row float-right">
           <a href="/login.html"
             ><button type="button" class="btn btn-outline-primary mr-1">
               Login
@@ -61,5 +62,23 @@
         </div>
       </div>
     </div>
+
   </body>
+  <script>
+    $.ajax({
+      type: 'GET',
+      url: '/auth/me',
+      success: function(data){
+        document.getElementById('login-container').style.visibility = 'hidden';
+        //You have a user/remove sign in and signup
+        //$("#login-container").css('visibility', 'none');
+      },
+
+      error: function(data){
+        document.getElementById('login-container').style.visibility = 'hidden';
+        //You have a user/remove sign in and signup
+        //$("#login-container").css('visibility', 'none');
+      },
+    })
+  </script>
 </html>

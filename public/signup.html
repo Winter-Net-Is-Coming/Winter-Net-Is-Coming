@@ -46,22 +46,22 @@
         required
       />
       <a class="btn btn-lg btn-primary btn-block" onClick="signUp()">Sign up</a>
-      <a href="/index.html">Already have an account? Login here.</a>
+      <a href="/">Already have an account? Login here.</a>
     </form>
     <script>
       function signUp() {
         var data = {
           email: document.forms[0].elements[0].value,
           password: document.forms[0].elements[1].value,
-          name: document.forms[0].elements[2].value,
+          userName: document.forms[0].elements[2].value,
         };
         $.ajax({
           type: 'POST',
-          url: '/signup',
+          url: '/auth/signup',
           data,
           success: function (data) {
             window.alert('user created successfully');
-            window.location.replace('/index.html');
+            window.location.replace('/game.html');
           },
           error: function (xhr) {
             window.alert(JSON.stringify(xhr));
