@@ -5,9 +5,15 @@ import MyGame from './scenes/MyGame';
 const config = {
   type: Phaser.AUTO,
   parent: 'game',
+<<<<<<< HEAD
   dom: {
     createContainer: true,
   },
+=======
+  // dom : {
+  //   createContainer : true,
+  // },
+>>>>>>> 8bf1461cdd4dc943f13cffeec50880622ac1625c
   width: 1200,
   height: 600,
   autoCenter: true,
