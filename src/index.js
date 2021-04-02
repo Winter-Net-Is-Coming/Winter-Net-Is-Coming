@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import MyGame from './scenes/MyGame';
+import LevelTwo from './scenes/LevelTwo';
 
 const config = {
   type: Phaser.AUTO,
