@@ -1,5 +1,6 @@
 import Phaser, { NONE } from 'phaser';
 import Zone from '../entity/Zone.js';
+import CountdownController from '../entity/CountdownController';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -21,6 +22,9 @@ export default class MyGame extends Phaser.Scene {
     for (let i = 1; i <= 15; i++) {
       this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
     }
+
+    this.load.image('energycontainer', 'assets/energycontainer.png');
+    this.load.image('energybar', 'assets/energybar.png');
   }
 
   generateBlock(x, y, blockName) {
@@ -42,6 +46,54 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(ground);
     this.matter.world.convertTilemapLayer(background);
 
+    this.monkey = this.matter.add
+      .sprite(105, 1700, 'monkey')
+      .setScale(0.75)
+      .setFixedRotation();
+
+    let gameOptions = { initialTime: 180 };
+    this.timeLeft = gameOptions.initialTime;
+
+    let energyContainer = this.add
+      .sprite(this.scale.width / 60, this.scale.height / 70, 'energycontainer')
+      .setScrollFactor(0)
+      .setScale(0.5);
+
+    let energyBar = this.add
+      .sprite(energyContainer.x + 25, energyContainer.y, 'energybar')
+      .setScrollFactor(0)
+      .setScale(0.5);
+    this.energyMask = this.add
+      .sprite(energyBar.x, energyBar.y, 'energybar')
+      .setScrollFactor(0)
+      .setScale(0.5);
+
+    this.energyMask.visible = false;
+
+    energyBar.mask = new Phaser.Display.Masks.BitmapMask(this, this.energyMask);
+
+    this.gameTimer = this.time.addEvent({
+      delay: 1000,
+      callback: function () {
+        this.timeLeft--;
+        let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
+        this.energyMask.x -= stepWidth;
+        // if (this.timeLeft == 0) {
+        //   this.scene.stop();
+        // }
+      },
+      callbackScope: this,
+      loop: true,
+    });
+
+    const timerLabel = this.add
+      .text(this.scale.width * 0.5, 50, '180', { fontSize: 50 })
+      .setOrigin(0.5);
+
+    // timerLabel.setScrollFactor(0);
+    this.countdown = new CountdownController(this, timerLabel);
+    this.countdown.start(this.handleCountdownFinished.bind(this));
+
     //adding test zone
     this.zone = new Zone(this);
 
@@ -61,11 +113,6 @@ export default class MyGame extends Phaser.Scene {
     // this.outlineTwo = this.zone.renderOutline(this.dropZTwo, 0xff09d2);
     // this.outlineThree = this.zone.renderOutline(this.dropZThree, 0xff09d2);
     // overall zone 750, 2100, 700, 1200
-
-    this.monkey = this.matter.add
-      .sprite(105, 1700, 'monkey')
-      .setScale(0.75)
-      .setFixedRotation();
 
     const block4 = this.generateBlock(490, 1900, 'block4');
     const block2 = this.generateBlock(block4.x + 105, 1900, 'block2');
@@ -371,16 +418,27 @@ export default class MyGame extends Phaser.Scene {
       monkey.play('idle', true);
     }
 
-    // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-
-    // if (justPressedSpace) {
+    const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
+    if (justPressedSpace) {
+      this.monkey.setVelocity(-15);
+    }
+    // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
+    //   this.monkey.play('jump', true);
     //   this.monkey.setVelocityY(-15);
     // }
-    const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-    if (justPressedSpace && this.monkey.body.velocity.y === 0) {
-      this.monkey.play('jump', true);
-      this.monkey.setVelocityY(-15);
-    }
+
+    this.countdown.update();
+  }
+
+  handleCountdownFinished() {
+    this.monkey.active = false;
+    this.monkey.setVelocity(0, 0);
+
+    const { width, height } = this.scale;
+    const lost = this.add
+      .text(width * 0.5, height * 0.5, 'You Lose!', { fontSize: 48 })
+      .setOrigin(0.5);
+    lost.setScrollFactor(0);
   }
 
   createMonkeyAnimations() {

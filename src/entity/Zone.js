@@ -4,7 +4,7 @@ export default class Zone {
       let dropZone = scene.add
         .zone(x, y, w, h, (active = false)) //(x,y,w,h)
         .setRectangleDropZone(w, h); //(w,h)
-      dropZone.setData({ bars: 0 });
+      // dropZone.setData({ bars: 0 });
       return dropZone;
     };
     this.renderOutline = (dropZone, color) => {
