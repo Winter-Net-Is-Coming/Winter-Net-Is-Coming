@@ -15,12 +15,13 @@ const config = {
       debug: true,
     },
   },
-  scene: [LevelTwo, MyGame],
 };
 
-export default new Phaser.Game(config);
+const game = new Phaser.Game(config);
 
-// game.scene.add('game', MyGame);
-// game.scene.add('LevelTwo', LevelTwo);
+game.scene.add('game', MyGame);
+game.scene.add('LevelTwo', LevelTwo);
+
+game.scene.start('LevelTwo');
 
 // export default game;
