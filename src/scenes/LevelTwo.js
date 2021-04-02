@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
+import MyGame from './MyGame';
 
 export default class LevelTwo extends Phaser.Scene {
   constructor() {
-    super('leveltwo');
+    super({ key: 'LevelTwo' });
   }
 
   init() {
@@ -307,8 +308,7 @@ export default class LevelTwo extends Phaser.Scene {
     if (justPressedSpace && this.monkey.body.velocity.y === 0) {
       this.monkey.play('jump', true);
       this.monkey.setVelocityY(-15);
-      console.log(this.monkey.x);
-      console.log(this.monkey.y);
+      this.scene.switch('game', MyGame);
     }
   }
 

@@ -1,10 +1,11 @@
-import Phaser, { NONE } from 'phaser';
+import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
 import CountdownController from '../entity/CountdownController';
+import LevelTwo from './LevelTwo';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
-    super('game');
+    super({ key: 'game' });
   }
 
   init() {
@@ -397,7 +398,6 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
 
     this.createMonkeyAnimations();
-    console.log(this.monkey.body);
   }
 
   update() {
@@ -420,6 +420,7 @@ export default class MyGame extends Phaser.Scene {
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
     if (justPressedSpace) {
+      this.scene.switch('LevelTwo', LevelTwo);
       this.monkey.setVelocity(-15);
     }
     // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
