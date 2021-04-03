@@ -39,6 +39,13 @@
             </button></a
           >
         </div>
+        <div id="logout-container" class="row float-right">
+          <a href="/logout.html"
+            ><button type="button" class="btn btn-outline-primary mr-1">
+              Logout
+            </button></a
+          >
+        </div>
       </h1>
     </div>
     <div id="game"></div>
@@ -64,21 +71,28 @@
     </div>
 
   </body>
-  <!-- <script>
+   <script>
     $.ajax({
       type: 'GET',
       url: '/auth/me',
       success: function(data){
         document.getElementById('login-container').style.visibility = 'hidden';
+        document.getElementById('logout-container').style.visibility = 'visible';
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
 
       error: function(data){
-        document.getElementById('login-container').style.visibility = 'hidden';
+
+        document.getElementById('login-container').style.visibility = 'visible';
+        document.getElementById('logout-container').style.visibility = 'hidden';
+        //document.getElementById('login-container').style.visibility = 'hidden';
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
     })
-  </script> -->
+  </script>
 </html>
+
+
+

@@ -46,7 +46,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     }
   )
 
-  passport.use(strategy)
+  //passport.use('google', strategy)
 
   router.get(
     '/',
