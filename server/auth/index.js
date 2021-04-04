@@ -62,11 +62,11 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
-router.post('/logout', (req, res) => {
-  req.logout()
-  req.session.destroy()
-  res.redirect('/')
-})
+router.post('/logout', async (req, res, next) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
+});
 
 router.get('/me', (req, res) => {
   res.json(req.user)
