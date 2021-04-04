@@ -30,9 +30,9 @@ export default class GameOver extends Phaser.Scene {
     btn.on('pointerup', this.startGame, this);
   }
   startGame() {
-    // this.scene.remove('GameOver');
-    let myGame = new MyGame('Newgame');
+    let myGame = new MyGame('game');
     // MyGame.scene.remove('game');
-    this.scene.add('Newgame', myGame, true);
+    this.scene.add('game', myGame, true);
+    this.scene.remove('GameOver');
   }
 }

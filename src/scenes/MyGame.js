@@ -431,9 +431,9 @@ export default class MyGame extends Phaser.Scene {
     //   movesCount: this.movesCount,
     //   remainingPegs: this.remainingPegs(),
     // });
-    // this.scene.remove('game');
     let gameOver = new GameOver('GameOver');
     this.scene.add('GameOver', gameOver, true);
+    this.scene.remove('game');
   }
 
   createMonkeyAnimations() {
