@@ -9,7 +9,6 @@ const localStrategy = new LocalStrategy({
       //Change this logic to actually check 
       console.log('AUTH', username, password)
       const user = await User.findOne({ where: {email: username} });
-        console.log("STEVE FIND", user)
       //if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });

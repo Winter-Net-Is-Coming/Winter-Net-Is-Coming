@@ -11,7 +11,6 @@ router.get('/authenticate', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   passport.authenticate('local', function (err, user, info) {
-    console.log("STEVE WHATS HAPPENING", err, user, info)
     if (err) {
       req.logout();      
       return res.status(403).json(err);    
