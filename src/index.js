@@ -1,5 +1,3 @@
-import Phaser from 'phaser';
-
 import MyGame from './scenes/MyGame';
 import LevelTwo from './scenes/LevelTwo';
 import GameOver from './scenes/GameOver';
@@ -18,7 +16,13 @@ const config = {
       debug: true,
     },
   },
-  scene: [MyGame],
 };
 
-export default new Phaser.Game(config);
+const game = new Phaser.Game(config);
+
+game.scene.add('game', MyGame);
+game.scene.add('LevelTwo', LevelTwo);
+
+game.scene.start('LevelTwo');
+
+// export default game;
