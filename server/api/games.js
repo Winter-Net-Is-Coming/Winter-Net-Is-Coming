@@ -11,14 +11,4 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// POST
-router.post('/', async (req, res, next) => {
-  try {
-    const game = await Game.create(req.body);
-    res.json(game);
-  } catch (err) {
-    next(err);
-  }
-});
-
 module.exports = router;

@@ -1,6 +1,5 @@
-const router = require('express').Router()
-const {User} = require('../db/models')
-const {ensureAdmin, ensureLogin} = require('./middleware')
+const router = require('express').Router();
+const { User } = require('../db/models');
 
 // get all users (only for admin)
 router.get('/', async (req, res, next) => {
@@ -9,13 +8,13 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'email', 'userName']
+      attributes: ['id', 'email', 'userName'],
     });
     res.json(users)
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 // POST
 router.post('/signup', async (req, res, next) => {
