@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
+import GameOver from './GameOver';
 import CountdownController from '../entity/CountdownController';
 import LevelTwo from './LevelTwo';
 
@@ -52,7 +53,8 @@ export default class MyGame extends Phaser.Scene {
       .setScale(0.75)
       .setFixedRotation();
 
-    let gameOptions = { initialTime: 180 };
+    // Time Bar //
+    let gameOptions = { initialTime: 10 };
     this.timeLeft = gameOptions.initialTime;
 
     let energyContainer = this.add
@@ -87,8 +89,9 @@ export default class MyGame extends Phaser.Scene {
       loop: true,
     });
 
+    // Timer //
     const timerLabel = this.add
-      .text(this.scale.width * 0.5, 50, '180', { fontSize: 50 })
+      .text(this.scale.width * 0.5, 50, '10', { fontSize: 50 })
       .setOrigin(0.5);
 
     // timerLabel.setScrollFactor(0);
@@ -348,19 +351,6 @@ export default class MyGame extends Phaser.Scene {
 
     ///////////
 
-    this.cameras.main.startFollow(this.monkey);
-    // this.cameras.main.setBounds (0, 0, 1920 * 2, 1080 * 2);
-    // this.matter.world.setBounds(0, 0, 1920 * 2, 1080 * 2);
-
-    // set the monkey animation
-    //this.createMonkeyAnimations();
-
-    this.cameras.main.startFollow(this.monkey);
-    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
-    this.cameras.main.zoom = 0.75;
-    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
-    this.createMonkeyAnimations();
-
     // this.input.on("dragend", function (pointer, gameObject) {
     //   let currentBlock = gameObject.texture.key;
     //   let xPos = gameObject.x;
@@ -398,6 +388,7 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
 
     this.createMonkeyAnimations();
+
   }
 
   update() {
@@ -434,12 +425,17 @@ export default class MyGame extends Phaser.Scene {
   handleCountdownFinished() {
     this.monkey.active = false;
     this.monkey.setVelocity(0, 0);
+    this.gameOver();
+  }
 
-    const { width, height } = this.scale;
-    const lost = this.add
-      .text(width * 0.5, height * 0.5, 'You Lose!', { fontSize: 48 })
-      .setOrigin(0.5);
-    lost.setScrollFactor(0);
+  gameOver() {
+    // this.registry.set('gamedata', {
+    //   movesCount: this.movesCount,
+    //   remainingPegs: this.remainingPegs(),
+    // });
+    let gameOver = new GameOver('GameOver');
+    this.scene.add('GameOver', gameOver, true);
+    this.scene.remove('game');
   }
 
   createMonkeyAnimations() {
