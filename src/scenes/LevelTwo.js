@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
 import MyGame from './MyGame';
+import CountdownController from '../entity/CountdownController';
+import GameOver from './GameOver';
 
 export default class LevelTwo extends Phaser.Scene {
   constructor() {
@@ -44,6 +46,15 @@ export default class LevelTwo extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(ground);
     this.matter.world.convertTilemapLayer(background);
 
+        // Timer //
+        const timerLabel = this.add
+        .text(this.scale.width * 0.5, 50, '10', { fontSize: 50 })
+        .setOrigin(0.5);
+  
+      // timerLabel.setScrollFactor(0);
+      this.countdown = new CountdownController(this, timerLabel);
+      this.countdown.start(this.handleCountdownFinished.bind(this));
+  
     //adding test zone
     this.zone = new Zone(this);
 
@@ -334,6 +345,12 @@ export default class LevelTwo extends Phaser.Scene {
   }
 
   update() {
+    //TODO refactor to official end game
+    if(this.monkey.x >200){
+      // run some function that says you won
+      ///this.wongame();
+      this.wonGame();
+    }
     //moves our character left, right, and jumping
     const speed = 20;
     const monkey = this.monkey;
@@ -399,5 +416,30 @@ export default class LevelTwo extends Phaser.Scene {
         frameRate: 10,
         frames: [{ key: 'monkey', frame: 'monkey_armsup_happy.png' }],
       });
+  }
+  handleCountdownFinished() {
+    this.monkey.active = false;
+    this.monkey.setVelocity(0, 0);
+    this.gameOver();
+  }
+  gameOver() {
+    // this.registry.set('gamedata', {
+    //   movesCount: this.movesCount,
+    //   remainingPegs: this.remainingPegs(),
+    // });
+    let gameOver = new GameOver('GameOver');
+    this.scene.add('GameOver', gameOver, true);
+    this.scene.remove('game');
+  }
+  wonGame() {
+    console.log("THIS IS NOT REAL WON GAME LOGIC")
+    $.post({
+      url: '/api/score',
+      data: { score: this.countdown.getTimeRemaining() / 1000},
+      success: (data) => console.log(data),
+      error: (err) => console.error(err),
+    })
+
+    throw Error("STOP THIS FROM OVER FLOODING SERVER")
   }
 }

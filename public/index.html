@@ -40,11 +40,9 @@
           >
         </div>
         <div id="logout-container" class="row float-right">
-          <a href="/login.html"
-            ><button type="button" class="btn btn-outline-primary mr-1">
+          <button type="button" class="btn btn-outline-primary mr-1" onclick="logoutHandler()">
               Logout
-            </button></a
-          >
+            </button>
         </div>
       </h1>
     </div>
@@ -89,6 +87,13 @@
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
+    })
+
+    const logoutHandler = () => $.ajax({
+      type: 'POST',
+      url: '/auth/logout',
+      success: () => window.location.href = '/login.html',
+      error: (err) => console.error(err),
     })
   </script>
 </html>

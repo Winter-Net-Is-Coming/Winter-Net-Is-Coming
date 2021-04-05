@@ -44,4 +44,9 @@ export default class CountdownController {
 
     this.label.text = seconds.toFixed(2);
   }
+
+  getTimeRemaining() {
+    const elapsed = this.timerEvent.getElapsed();
+    return this.duration - elapsed;
+  }
 }

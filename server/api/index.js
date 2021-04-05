@@ -3,6 +3,7 @@ module.exports = router
 
 router.use('/users', require('./users'));
 //router.use('/games', require('./games'));
+router.use('/score', require('./game-profile'));
 
 
 router.use((req, res, next) => {
