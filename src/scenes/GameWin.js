@@ -1,6 +1,4 @@
 import Phaser from 'phaser';
-import MyGame from './MyGame';
-import LevelTwo from './LevelTwo';
 
 export default class GameWin extends Phaser.Scene {
   constructor() {

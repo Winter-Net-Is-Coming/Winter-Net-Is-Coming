@@ -449,7 +449,6 @@ export default class MyGame extends Phaser.Scene {
 
   remainingTime() {
     return this.countdown.update();
-    // console.log('countdown.update', this.countdown.update());
   }
 
   createMonkeyAnimations() {
