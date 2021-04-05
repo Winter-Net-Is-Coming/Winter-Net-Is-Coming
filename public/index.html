@@ -92,7 +92,12 @@
     const logoutHandler = () => $.ajax({
       type: 'POST',
       url: '/auth/logout',
-      success: () => window.location.href = '/login.html',
+      success: () => {
+        return (
+          document.getElementById('login-container').style.visibility = 'visible',
+          document.getElementById('logout-container').style.visibility = 'hidden'
+       
+        )},
       error: (err) => console.error(err),
     })
   </script>
