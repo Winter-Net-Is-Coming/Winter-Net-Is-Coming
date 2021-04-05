@@ -1,10 +1,10 @@
-import Phaser from 'phaser';
-import Zone from '../entity/Zone.js';
-import MyGame from './MyGame';
+import Phaser from "phaser";
+import Zone from "../entity/Zone.js";
+import MyGame from "./MyGame";
 
 export default class LevelTwo extends Phaser.Scene {
   constructor() {
-    super({ key: 'LevelTwo' });
+    super({ key: "LevelTwo" });
   }
 
   init() {
@@ -12,12 +12,12 @@ export default class LevelTwo extends Phaser.Scene {
   }
 
   preload() {
-    this.load.atlas('monkey', 'assets/monkey.png', 'assets/monkey.json');
+    this.load.atlas("monkey", "assets/monkey.png", "assets/monkey.json");
 
-    this.load.image('tiles', 'assets/platformersheet.png');
-    this.load.image('tilesbg', 'assets/backgroundForest.png');
+    this.load.image("tiles", "assets/platformersheet.png");
+    this.load.image("tilesbg", "assets/backgroundForest.png");
 
-    this.load.tilemapTiledJSON('tilemap', 'assets/levelTwo.json');
+    this.load.tilemapTiledJSON("tilemap", "assets/levelTwo.json");
 
     for (let i = 1; i <= 15; i++) {
       this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
@@ -32,14 +32,18 @@ export default class LevelTwo extends Phaser.Scene {
   }
 
   create() {
-    console.log(this.cache.tilemap.get('tilemap').data);
-    //create map
-    const map = this.make.tilemap({ key: 'tilemap' });
-    const tileset = map.addTilesetImage('levelTwo', 'tiles');
-    const backgroundSet = map.addTilesetImage('backgroundForest', 'tilesbg');
-    const ground = map.createLayer('ground', tileset);
+    this.add.text(400, 1400, `Coming Soon`, {
+      fontSize: "50px",
+      color: "white",
+    });
 
-    const background = map.createLayer('background', backgroundSet);
+    //create map
+    const map = this.make.tilemap({ key: "tilemap" });
+    const tileset = map.addTilesetImage("levelTwo", "tiles");
+    const backgroundSet = map.addTilesetImage("backgroundForest", "tilesbg");
+    const ground = map.createLayer("ground", tileset);
+
+    const background = map.createLayer("background", backgroundSet);
     ground.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(ground);
     this.matter.world.convertTilemapLayer(background);
@@ -65,27 +69,27 @@ export default class LevelTwo extends Phaser.Scene {
     // overall zone 750, 2100, 700, 1200
 
     this.monkey = this.matter.add
-      .sprite(105, 1700, 'monkey')
+      .sprite(105, 1700, "monkey")
       .setScale(0.75)
       .setFixedRotation();
 
-    const block2 = this.generateBlock(1844, 1200, 'block2');
-    const block4 = this.generateBlock(block2.x + 105, 1200, 'block4');
-    const block3 = this.generateBlock(block4.x + 105, 1200, 'block3');
-    const block1 = this.generateBlock(block3.x + 105, 1200, 'block1');
+    const block2 = this.generateBlock(1844, 1200, "block2");
+    const block4 = this.generateBlock(block2.x + 105, 1200, "block4");
+    const block3 = this.generateBlock(block4.x + 105, 1200, "block3");
+    const block1 = this.generateBlock(block3.x + 105, 1200, "block1");
 
-    const block7 = this.generateBlock(5044, 700, 'block7');
-    const block6 = this.generateBlock(block7.x + 120, 700, 'block6');
-    const block5 = this.generateBlock(block6.x + 120, 700, 'block5');
-    const block9 = this.generateBlock(block5.x + 120, 700, 'block9');
-    const block8 = this.generateBlock(block9.x + 120, 700, 'block8');
+    const block7 = this.generateBlock(5044, 700, "block7");
+    const block6 = this.generateBlock(block7.x + 120, 700, "block6");
+    const block5 = this.generateBlock(block6.x + 120, 700, "block5");
+    const block9 = this.generateBlock(block5.x + 120, 700, "block9");
+    const block8 = this.generateBlock(block9.x + 120, 700, "block8");
 
-    const block14 = this.generateBlock(3536, 1200, 'block14');
-    const block11 = this.generateBlock(block14.x + 79, 1200, 'block11');
-    const block15 = this.generateBlock(block11.x + 79, 1200, 'block15');
-    const block10 = this.generateBlock(block15.x + 79, 1200, 'block10');
-    const block13 = this.generateBlock(block10.x + 79, 1200, 'block13');
-    const block12 = this.generateBlock(block13.x + 79, 1200, 'block12');
+    const block14 = this.generateBlock(3536, 1200, "block14");
+    const block11 = this.generateBlock(block14.x + 79, 1200, "block11");
+    const block15 = this.generateBlock(block11.x + 79, 1200, "block15");
+    const block10 = this.generateBlock(block15.x + 79, 1200, "block10");
+    const block13 = this.generateBlock(block10.x + 79, 1200, "block13");
+    const block12 = this.generateBlock(block13.x + 79, 1200, "block12");
 
     this.input.setDraggable(block3, true);
     this.input.setDraggable(block11, true);
@@ -96,9 +100,9 @@ export default class LevelTwo extends Phaser.Scene {
     // this.input.setDraggable(block10, true);
 
     this.input.dragDistanceThreshold = 0;
-    -this.input.on('dragstart', function (pointer, gameObject) {});
+    -this.input.on("dragstart", function (pointer, gameObject) {});
 
-    this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+    this.input.on("drag", function (pointer, gameObject, dragX, dragY) {
       gameObject.x = dragX;
       gameObject.y = dragY;
     });
@@ -108,7 +112,7 @@ export default class LevelTwo extends Phaser.Scene {
     //   //console.log(gameObject.x);
     // });
 
-    this.input.on('dragend', function (pointer, gameObject, dropped) {
+    this.input.on("dragend", function (pointer, gameObject, dropped) {
       //while dragging, when dropped, return object back to original starting pos.
       if (!dropped) {
         gameObject.x = gameObject.input.dragStartX;
@@ -121,7 +125,7 @@ export default class LevelTwo extends Phaser.Scene {
       1233,
       929,
       `Order these from shortest to  \ntallest using Insertion Sort!`,
-      { fontSize: '32px' }
+      { fontSize: "32px" }
     );
     // ////Insertion SORT ////
     let red = 0xff0000;
@@ -130,12 +134,12 @@ export default class LevelTwo extends Phaser.Scene {
     let yellow = 0xffff00;
     block2.setTint(red);
     block4.setTint(red);
-    this.input.on('dragend', function (pointer, gameObject) {
+    this.input.on("dragend", function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
 
-      if (currentBlock === 'block3' && xPos > 1930 && xPos < 1950) {
-        helper.setText('Thats right!');
+      if (currentBlock === "block3" && xPos > 1930 && xPos < 1950) {
+        helper.setText("Thats right!");
 
         block2.setTint(red);
         block3.setTint(red);
@@ -143,8 +147,8 @@ export default class LevelTwo extends Phaser.Scene {
         block3.input.draggable = false;
         block1.input.draggable = true;
         //     // if its the wrong move we reset it
-      } else if (currentBlock === 'block1' && xPos > 1830 && xPos < 1850) {
-        helper.setText('Good Job!');
+      } else if (currentBlock === "block1" && xPos > 1830 && xPos < 1850) {
+        helper.setText("Good Job!");
         block1.input.draggable = false;
         block2.setTint(none);
         block3.setTint(none);
@@ -157,7 +161,7 @@ export default class LevelTwo extends Phaser.Scene {
       2980,
       1017,
       `Order these from shortest to  \ntallest using Merge Sort!`,
-      { fontSize: '32px' }
+      { fontSize: "32px" }
     );
     // if (this.monkey.x > 200) {
     //   helper.setText('Insertion Sort');
@@ -166,12 +170,12 @@ export default class LevelTwo extends Phaser.Scene {
     // block7.setTint(0x00ff00);
     block14.setTint(yellow);
     block11.setTint(red);
-    this.input.on('dragend', function (pointer, gameObject) {
+    this.input.on("dragend", function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       console.log(currentBlock);
       let xPos = gameObject.x;
 
-      if (currentBlock === 'block11' && xPos > 3560 && xPos < 3570) {
+      if (currentBlock === "block11" && xPos > 3560 && xPos < 3570) {
         mergeHelper.setText(`Thats right! Now move to the right half!`);
         block14.setTint(yellow);
         block11.setTint(yellow);
@@ -179,7 +183,7 @@ export default class LevelTwo extends Phaser.Scene {
         block12.setTint(red);
         block11.input.draggable = false;
         block12.input.draggable = true;
-      } else if (currentBlock === 'block12' && xPos > 3950 && xPos < 3960) {
+      } else if (currentBlock === "block12" && xPos > 3950 && xPos < 3960) {
         mergeHelper.setText(`Thats right! Now put it all together!`);
         block11.setTint(yellow);
         block14.setTint(yellow);
@@ -187,7 +191,7 @@ export default class LevelTwo extends Phaser.Scene {
         block12.input.draggable = false;
         block10.input.draggable = true;
         block10.setTint(red);
-      } else if (currentBlock === 'block10' && xPos > 3560 && xPos < 3570) {
+      } else if (currentBlock === "block10" && xPos > 3560 && xPos < 3570) {
         block10.input.draggable = false;
         block10.setTint(yellow);
         block11.setTint(yellow);
@@ -195,7 +199,7 @@ export default class LevelTwo extends Phaser.Scene {
         block15.setTint(yellow);
         block12.input.draggable = true;
         block12.setTint(red);
-      } else if (currentBlock === 'block12' && xPos > 3755 && xPos < 3765) {
+      } else if (currentBlock === "block12" && xPos > 3755 && xPos < 3765) {
         mergeHelper.setText(`3 more days`);
         block12.input.draggable = false;
         block10.setTint(yellow);
@@ -205,7 +209,7 @@ export default class LevelTwo extends Phaser.Scene {
         block15.setTint(yellow);
         block13.input.draggable = true;
         block13.setTint(red);
-      } else if (currentBlock === 'block13' && xPos > 3850 && xPos < 3870) {
+      } else if (currentBlock === "block13" && xPos > 3850 && xPos < 3870) {
         mergeHelper.setText(`I'm tired of this `);
         block10.setTint(none);
         block11.setTint(none);
@@ -221,25 +225,25 @@ export default class LevelTwo extends Phaser.Scene {
       4700,
       297,
       `Order these from shortest to  \ntallest using Bubble Sort!`,
-      { fontSize: '32px' }
+      { fontSize: "32px" }
     );
     block7.setTint(green);
     block6.setTint(green);
-    this.input.on('dragend', function (pointer, gameObject) {
+    this.input.on("dragend", function (pointer, gameObject) {
       let currentBlock = gameObject.texture.key;
       let xPos = gameObject.x;
-      if (currentBlock === 'block7' && xPos > 5140 && xPos < 5200) {
+      if (currentBlock === "block7" && xPos > 5140 && xPos < 5200) {
         block7.setTint(green);
         block5.setTint(green);
         block6.setTint(none);
-      } else if (currentBlock === 'block7' && xPos > 5230 && xPos < 5255) {
+      } else if (currentBlock === "block7" && xPos > 5230 && xPos < 5255) {
         block7.input.draggable = false;
         block9.input.draggable = true;
         block7.setTint(none);
         block5.setTint(none);
         block9.setTint(green);
         block8.setTint(green);
-      } else if (currentBlock === 'block9' && xPos > 5450 && xPos < 5475) {
+      } else if (currentBlock === "block9" && xPos > 5450 && xPos < 5475) {
         block9.input.draggable = false;
         block7.setTint(red);
         block8.setTint(red);
@@ -247,14 +251,14 @@ export default class LevelTwo extends Phaser.Scene {
         block6.input.draggable = true;
         block6.setTint(green);
         block5.setTint(green);
-      } else if (currentBlock === 'block6' && xPos > 5140 && xPos < 5200) {
+      } else if (currentBlock === "block6" && xPos > 5140 && xPos < 5200) {
         block6.input.draggable = false;
         block5.setTint(none);
         block6.setTint(none);
         block7.setTint(none);
         block8.setTint(none);
         block9.setTint(none);
-        bubbleHelper.setText('Finally done');
+        bubbleHelper.setText("Finally done");
         //     window.alert('Thats right!');
         //     block10.input.draggable = false;
         //     block14.input.draggable = true;
@@ -341,14 +345,14 @@ export default class LevelTwo extends Phaser.Scene {
     if (this.cursors.left.isDown) {
       monkey.flipX = true;
       monkey.setVelocityX(-speed);
-      monkey.play('run', true);
+      monkey.play("run", true);
     } else if (this.cursors.right.isDown) {
       monkey.flipX = false;
       monkey.setVelocityX(speed);
-      monkey.play('run', true);
+      monkey.play("run", true);
     } else {
       monkey.setVelocityX(0);
-      monkey.play('idle', true);
+      monkey.play("idle", true);
     }
 
     // const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
@@ -360,44 +364,44 @@ export default class LevelTwo extends Phaser.Scene {
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
 
     if (justPressedSpace) {
-      this.monkey.play('jump', true);
+      this.monkey.play("jump", true);
       this.monkey.setVelocityY(-15);
-      console.log('X', this.monkey.x, 'Y', this.monkey.y);
+      console.log("X", this.monkey.x, "Y", this.monkey.y);
     }
   }
 
   createMonkeyAnimations() {
     this.anims.create({
-      key: 'run',
+      key: "run",
       frameRate: 10,
-      frames: this.anims.generateFrameNames('monkey', {
+      frames: this.anims.generateFrameNames("monkey", {
         start: 1,
         end: 8,
-        prefix: 'monkey_run_',
-        suffix: '.png',
+        prefix: "monkey_run_",
+        suffix: ".png",
       }),
       repeat: -1,
     }),
       this.anims.create({
-        key: 'idle',
+        key: "idle",
         frameRate: 10,
-        frames: [{ key: 'monkey', frame: 'monkey_idle.png' }],
+        frames: [{ key: "monkey", frame: "monkey_idle.png" }],
       }),
       this.anims.create({
-        key: 'jump',
+        key: "jump",
         frameRate: 10,
-        frames: this.anims.generateFrameNames('monkey', {
+        frames: this.anims.generateFrameNames("monkey", {
           start: 1,
           end: 3,
-          prefix: 'monkey_jump_swing_',
-          suffix: '.png',
+          prefix: "monkey_jump_swing_",
+          suffix: ".png",
         }),
         repeat: -1,
       }),
       this.anims.create({
-        key: 'celebrate',
+        key: "celebrate",
         frameRate: 10,
-        frames: [{ key: 'monkey', frame: 'monkey_armsup_happy.png' }],
+        frames: [{ key: "monkey", frame: "monkey_armsup_happy.png" }],
       });
   }
 }

@@ -166,7 +166,7 @@ export default class MyGame extends Phaser.Scene {
       }
       console.log(gameObject.texture.key, gameObject.x, gameObject.y);
     });
-    let red = 0xff0000;
+    let red = 0x5761f0;
     let green = 0x00ffff;
     let none = 0xffffff;
     let yellow = 0xffff00;
@@ -174,7 +174,7 @@ export default class MyGame extends Phaser.Scene {
     let helper = this.add.text(
       400,
       1400,
-      `Compare the two highlighted blocks \nKeep moving the bigger block to the right`,
+      `Start with the first block on the left, \ncompare it to the block on the right\n If the left is bigger, drag it to the right.`,
       { fontSize: "25px", color: "black" }
     );
     ////BUBBLE SORT ////
@@ -231,7 +231,7 @@ export default class MyGame extends Phaser.Scene {
     let helperInsertion = this.add.text(
       1000,
       1202,
-      `Compare the highlighted block \nwith the blocks to the left &\n drag to the left if it's smaller. `,
+      `Compare the "6" block \nwith the block to the left &\n drag to the left if it's smaller. `,
       { fontSize: "25px", color: "black" }
     );
 
@@ -244,7 +244,7 @@ export default class MyGame extends Phaser.Scene {
       if (currentBlock === "block6" && xPos > 1360 && xPos < 1600) {
         removeText(helper);
         helperInsertion.setText(
-          "Where does 5 belong? Drag it to the \n correct spot "
+          `Where does "5" belong? Drag it to the \n correct spot `
         );
         block6.setTint(red);
         block5.setTint(green);
@@ -254,7 +254,7 @@ export default class MyGame extends Phaser.Scene {
         block5.input.draggable = true;
       } else if (currentBlock === "block5" && xPos > 1360 && xPos < 1600) {
         helperInsertion.setText(
-          "Nice!, it look like 9 is bigger than\n the block on the left, so where does the 8 belong?  "
+          `Nice!, it look like "9" is bigger than\n the block on the left, so where does the "8" belong?  `
         );
         block6.setTint(none);
         block5.setTint(none);
@@ -277,7 +277,7 @@ export default class MyGame extends Phaser.Scene {
     let helperMerge = this.add.text(
       3200,
       900,
-      `Start by sorting the left half\nDragging the selected block from right\n to left. `,
+      `Begin by sorting the left half\nStart with the "10" block and compare\n it to the block\n on the left. `,
       { fontSize: "25px", color: "black" }
     );
     block15.setTint(red);
@@ -290,12 +290,14 @@ export default class MyGame extends Phaser.Scene {
         block15.setTint(red);
         block10.setTint(red);
         block14.setTint(yellow);
-        helperMerge.setText("Great!, What about block 14, where should it go");
+        helperMerge.setText(
+          `Great!, What about block "14", where should it go`
+        );
         block10.input.draggable = false;
         block14.input.draggable = true;
       } else if (currentBlock === "block14" && xPos > 4105 && xPos < 4200) {
         helperMerge.setText(
-          "You sorted the left half! Let's try the right half!\n Where does 12 go?"
+          `You sorted the left half! Let's try the right half!\n Where does "12" go?`
         );
         block15.setTint(none);
         block10.setTint(none);
@@ -307,7 +309,7 @@ export default class MyGame extends Phaser.Scene {
         block12.input.draggable = true;
       } else if (currentBlock === "block12" && xPos > 4372 && xPos < 4432) {
         helperMerge.setText(
-          "Now the left and right are sorted, lets put it all together,\n 15 is in place, so let's move on the the 11"
+          `Now the left and right are sorted, lets put it all together,\n "15" is in place, so let's move on the the "11"`
         );
         block15.setTint(red);
         block10.setTint(red);
@@ -318,7 +320,7 @@ export default class MyGame extends Phaser.Scene {
         block12.input.draggable = false;
         block11.input.draggable = true;
       } else if (currentBlock === "block11" && xPos > 4110 && xPos < 4120) {
-        helperMerge.setText("Nice!, What about block 12, where should it go");
+        helperMerge.setText(`Nice!, What about block "12", where should it go`);
         block15.setTint(red);
         block10.setTint(red);
         block14.setTint(red);
@@ -345,7 +347,7 @@ export default class MyGame extends Phaser.Scene {
         block11.setTint(none);
         block12.setTint(none);
         helperMerge.setText(
-          "Congratulations on solving the Merge Sort algorithm!"
+          "You did it, this is the Merge Sort algorithm!\n Split the set in half. \nSort the left, right, then the whole set by \nmoving the smallest to the left. "
         );
         block13.input.draggable = false;
       }
