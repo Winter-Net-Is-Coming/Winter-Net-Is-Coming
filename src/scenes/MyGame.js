@@ -1,7 +1,7 @@
-import Phaser from 'phaser';
-import Zone from '../entity/Zone.js';
-import GameOver from './GameOver';
-import CountdownController from '../entity/CountdownController';
+import Phaser from "phaser";
+import Zone from "../entity/Zone.js";
+import GameOver from "./GameOver";
+import CountdownController from "../entity/CountdownController";
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -24,11 +24,10 @@ export default class MyGame extends Phaser.Scene {
       this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
     }
 
-    this.load.image('energycontainer', 'assets/energycontainer.png');
-    this.load.image('energybar', 'assets/energybar.png');
+    this.load.image("energycontainer", "assets/energycontainer.png");
+    this.load.image("energybar", "assets/energybar.png");
 
-    this.load.image('banana', 'assets/banana.png');
-
+    this.load.image("banana", "assets/banana.png");
   }
 
   generateBlock(x, y, blockName) {
@@ -51,7 +50,7 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(background);
 
     this.banana = this.matter.add
-      .sprite(6200, 200, 'banana')
+      .sprite(6200, 200, "banana")
       .setScale(0.05)
       .setFixedRotation();
     this.monkey = this.matter.add
@@ -94,7 +93,7 @@ export default class MyGame extends Phaser.Scene {
 
     // Timer //
     const timerLabel = this.add
-      .text(this.scale.width * 0.5, 50, '300', { fontSize: 50 })
+      .text(this.scale.width * 0.5, 50, "300", { fontSize: 50 })
       .setOrigin(0.5);
 
     this.countdown = new CountdownController(this, timerLabel);
@@ -412,7 +411,7 @@ export default class MyGame extends Phaser.Scene {
     }
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-    if (justPressedSpace) {
+    if (justPressedSpace && this.monkey.body.velocity.y === 0) {
       //this.scene.switch('LevelTwo', LevelTwo);
       this.monkey.setVelocity(-15);
     }
@@ -437,16 +436,16 @@ export default class MyGame extends Phaser.Scene {
   }
 
   gameOver() {
-    let gameOver = new GameOver('GameOver');
-    this.scene.add('GameOver', gameOver, true);
-    this.scene.remove('game');
+    let gameOver = new GameOver("GameOver");
+    this.scene.add("GameOver", gameOver, true);
+    this.scene.remove("game");
   }
 
   gameWin() {
-    this.registry.set('gamedata', {
+    this.registry.set("gamedata", {
       remainingTime: this.remainingTime(),
     });
-    this.scene.start('GameWin');
+    this.scene.start("GameWin");
   }
 
   remainingTime() {
