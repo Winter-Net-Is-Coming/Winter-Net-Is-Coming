@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const compression = require('compression');
 const session = require('express-session');
+const {localStrategy} = require('./auth/local');
 const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
@@ -29,8 +30,8 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV !== 'production') require('../secrets');
 
 // passport registration
+passport.use('local', localStrategy);
 passport.serializeUser((user, done) => done(null, user.id));
-
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await db.models.user.findByPk(id);

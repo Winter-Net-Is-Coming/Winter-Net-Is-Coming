@@ -7,6 +7,7 @@ export default class CountdownController {
   }
 
   start(callback, duration = 300000) {
+
     this.stop();
 
     this.finishedCallback = callback;
@@ -15,7 +16,7 @@ export default class CountdownController {
     this.timerEvent = this.scene.time.addEvent({
       delay: duration,
       callback: () => {
-        this.label.text = '0';
+        this.label.text = "0";
 
         this.stop();
 

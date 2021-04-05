@@ -1,3 +1,4 @@
+
 import MyGame from './scenes/MyGame';
 import LevelTwo from './scenes/LevelTwo';
 import GameOver from './scenes/GameOver';
@@ -5,12 +6,12 @@ import GameWin from './scenes/GameWin';
 
 const config = {
   type: Phaser.AUTO,
-  parent: 'game',
+  parent: "game",
   width: 1200,
   height: 600,
   autoCenter: true,
   physics: {
-    default: 'matter',
+    default: "matter",
     matter: {
       gravity: { y: 2 },
 
