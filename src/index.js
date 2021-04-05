@@ -14,7 +14,7 @@ const config = {
     matter: {
       gravity: { y: 2 },
 
-      debug: true,
+      debug: false,
     },
   },
 };
@@ -29,4 +29,4 @@ game.scene.add('GameWin', GameWin);
 game.scene.start('game');
 // game.scene.start('LevelTwo');
 
-// export default game;
+export default game;

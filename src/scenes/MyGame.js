@@ -59,7 +59,7 @@ export default class MyGame extends Phaser.Scene {
       .setFixedRotation();
 
     // Time Bar //
-    let gameOptions = { initialTime: 10 };
+    let gameOptions = { initialTime: 300 };
     this.timeLeft = gameOptions.initialTime;
 
     let energyContainer = this.add
@@ -93,7 +93,7 @@ export default class MyGame extends Phaser.Scene {
 
     // Timer //
     const timerLabel = this.add
-      .text(this.scale.width * 0.5, 50, '10', { fontSize: 50 })
+      .text(this.scale.width * 0.5, 50, '300', { fontSize: 50 })
       .setOrigin(0.5);
 
     this.countdown = new CountdownController(this, timerLabel);
@@ -384,9 +384,9 @@ export default class MyGame extends Phaser.Scene {
     //victory coordinates 705 6293
     this.cameras.main.startFollow(this.monkey);
 
-    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
+    this.cameras.main.setBounds(45, 0, 2119 * 3, 1080 * 2);
     this.cameras.main.zoom = 0.75;
-    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
+    this.matter.world.setBounds(0, 0, 2119 * 3, 1080 * 2);
 
     this.createMonkeyAnimations();
   }
@@ -421,7 +421,7 @@ export default class MyGame extends Phaser.Scene {
 
     this.countdown.update();
 
-    if (this.monkey.x > 6200) {
+    if (this.monkey.x > 6100) {
       this.monkey.active = false;
       this.monkey.setVelocity(0, 0);
       this.gameWin();
