@@ -2,9 +2,9 @@ import Phaser from 'phaser';
 import MyGame from './MyGame';
 import LevelTwo from './LevelTwo';
 
-export default class GameOver extends Phaser.Scene {
+export default class GameWin extends Phaser.Scene {
   constructor() {
-    super('GameOver');
+    super('GameWin');
   }
   preload() {
     this.load.image('playagain', 'assets/playagain.png');
@@ -14,10 +14,19 @@ export default class GameOver extends Phaser.Scene {
   create() {
     var gamedata = this.registry.get('gamedata');
 
-    this.add.text(this.scale.width * 0.35, 100, 'Game Over', {
+    this.add.text(this.scale.width * 0.35, 100, 'You Won!!', {
       font: '60px Courier',
       fill: '#ffffff',
     });
+
+    // if (gamedata.remainingTime > 1) {
+    //   this.remainingTime = this.add.text(
+    //     30,
+    //     220,
+    //     'Remaining Time: ' + gamedata.remainingTime,
+    //     { font: '42px Courier', fill: '#000000' }
+    //   );
+    // }
 
     var btn1 = this.add.image(this.scale.width * 0.35, 300, 'playagain');
     btn1.setInteractive();
@@ -31,14 +40,15 @@ export default class GameOver extends Phaser.Scene {
     btn2.setScale(0.25);
   }
   startGame() {
-    let myGame = new MyGame('game');
-    this.scene.add('game', myGame, true);
-    this.scene.remove('GameOver');
+    // let myGame = new MyGame('game');
+    // this.scene.add('game', myGame, true);
+    // this.scene.remove('GameWin');
+    this.scene.start('game');
   }
   nextGame() {
     let levelTwo = new LevelTwo('LevelTwo');
     this.scene.add('LevelTwo', levelTwo, true);
-    this.scene.remove('GameOver');
+    this.scene.remove('GameWin');
     // this.scene.remove('game');
   }
 }

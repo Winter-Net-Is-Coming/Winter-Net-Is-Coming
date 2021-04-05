@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
 import GameOver from './GameOver';
+import GameWin from './GameWin';
 import CountdownController from '../entity/CountdownController';
-import LevelTwo from './LevelTwo';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -27,6 +27,8 @@ export default class MyGame extends Phaser.Scene {
 
     this.load.image('energycontainer', 'assets/energycontainer.png');
     this.load.image('energybar', 'assets/energybar.png');
+
+    this.load.image('banana', 'assets/banana.png');
   }
 
   generateBlock(x, y, blockName) {
@@ -48,6 +50,10 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(ground);
     this.matter.world.convertTilemapLayer(background);
 
+    this.banana = this.matter.add
+      .sprite(6200, 200, 'banana')
+      .setScale(0.05)
+      .setFixedRotation();
     this.monkey = this.matter.add
       .sprite(105, 1700, 'monkey')
       .setScale(0.75)
@@ -94,7 +100,6 @@ export default class MyGame extends Phaser.Scene {
       .text(this.scale.width * 0.5, 50, '10', { fontSize: 50 })
       .setOrigin(0.5);
 
-    // timerLabel.setScrollFactor(0);
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountdownFinished.bind(this));
 
@@ -388,7 +393,6 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
 
     this.createMonkeyAnimations();
-
   }
 
   update() {
@@ -411,7 +415,7 @@ export default class MyGame extends Phaser.Scene {
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
     if (justPressedSpace) {
-      this.scene.switch('LevelTwo', LevelTwo);
+      // this.scene.switch('LevelTwo', LevelTwo);
       this.monkey.setVelocity(-15);
     }
     // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
@@ -420,6 +424,12 @@ export default class MyGame extends Phaser.Scene {
     // }
 
     this.countdown.update();
+
+    if (this.monkey.x > 6200) {
+      this.monkey.active = false;
+      this.monkey.setVelocity(0, 0);
+      this.gameWin();
+    }
   }
 
   handleCountdownFinished() {
@@ -436,6 +446,13 @@ export default class MyGame extends Phaser.Scene {
     let gameOver = new GameOver('GameOver');
     this.scene.add('GameOver', gameOver, true);
     this.scene.remove('game');
+  }
+
+  gameWin() {
+    // let gameWin = new GameWin('GameWin');
+    // this.scene.add('GameWin', gameWin, true);
+    // this.scene.remove('game');
+    this.scene.start('GameWin');
   }
 
   createMonkeyAnimations() {
