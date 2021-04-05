@@ -6,7 +6,8 @@ export default class CountdownController {
     this.label = label;
   }
 
-  start(callback, duration = 180000) {
+  start(callback, duration = 300000) {
+
     this.stop();
 
     this.finishedCallback = callback;
@@ -43,5 +44,6 @@ export default class CountdownController {
     const seconds = remaining / 1000;
 
     this.label.text = seconds.toFixed(2);
+    return this.label.text;
   }
 }

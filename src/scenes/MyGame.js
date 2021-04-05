@@ -1,8 +1,7 @@
-import Phaser from "phaser";
-import Zone from "../entity/Zone.js";
-import GameOver from "./GameOver";
-import CountdownController from "../entity/CountdownController";
-import LevelTwo from "./LevelTwo";
+import Phaser from 'phaser';
+import Zone from '../entity/Zone.js';
+import GameOver from './GameOver';
+import CountdownController from '../entity/CountdownController';
 
 export default class MyGame extends Phaser.Scene {
   constructor() {
@@ -25,8 +24,11 @@ export default class MyGame extends Phaser.Scene {
       this.load.image(`block${i}`, `assets/blocks/block${i}.png`);
     }
 
-    this.load.image("energycontainer", "assets/energycontainer.png");
-    this.load.image("energybar", "assets/energybar.png");
+    this.load.image('energycontainer', 'assets/energycontainer.png');
+    this.load.image('energybar', 'assets/energybar.png');
+
+    this.load.image('banana', 'assets/banana.png');
+
   }
 
   generateBlock(x, y, blockName) {
@@ -48,13 +50,17 @@ export default class MyGame extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(ground);
     this.matter.world.convertTilemapLayer(background);
 
+    this.banana = this.matter.add
+      .sprite(6200, 200, 'banana')
+      .setScale(0.05)
+      .setFixedRotation();
     this.monkey = this.matter.add
       .sprite(105, 1700, "monkey")
       .setScale(0.75)
       .setFixedRotation();
 
     // Time Bar //
-    let gameOptions = { initialTime: 10 };
+    let gameOptions = { initialTime: 300 };
     this.timeLeft = gameOptions.initialTime;
 
     let energyContainer = this.add
@@ -81,9 +87,6 @@ export default class MyGame extends Phaser.Scene {
         this.timeLeft--;
         let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
         this.energyMask.x -= stepWidth;
-        // if (this.timeLeft == 0) {
-        //   this.scene.stop();
-        // }
       },
       callbackScope: this,
       loop: true,
@@ -91,10 +94,9 @@ export default class MyGame extends Phaser.Scene {
 
     // Timer //
     const timerLabel = this.add
-      .text(this.scale.width * 0.5, 50, "10", { fontSize: 50 })
+      .text(this.scale.width * 0.5, 50, '300', { fontSize: 50 })
       .setOrigin(0.5);
 
-    // timerLabel.setScrollFactor(0);
     this.countdown = new CountdownController(this, timerLabel);
     this.countdown.start(this.handleCountdownFinished.bind(this));
 
@@ -384,9 +386,9 @@ export default class MyGame extends Phaser.Scene {
     //victory coordinates 705 6293
     this.cameras.main.startFollow(this.monkey);
 
-    this.cameras.main.setBounds(45, 0, 2150 * 3, 1080 * 2);
+    this.cameras.main.setBounds(45, 0, 2119 * 3, 1080 * 2);
     this.cameras.main.zoom = 0.75;
-    this.matter.world.setBounds(0, 0, 2150 * 3, 1080 * 2);
+    this.matter.world.setBounds(0, 0, 2119 * 3, 1080 * 2);
 
     this.createMonkeyAnimations();
   }
@@ -420,6 +422,12 @@ export default class MyGame extends Phaser.Scene {
     // }
 
     this.countdown.update();
+
+    if (this.monkey.x > 6100) {
+      this.monkey.active = false;
+      this.monkey.setVelocity(0, 0);
+      this.gameWin();
+    }
   }
 
   handleCountdownFinished() {
@@ -429,13 +437,20 @@ export default class MyGame extends Phaser.Scene {
   }
 
   gameOver() {
-    // this.registry.set('gamedata', {
-    //   movesCount: this.movesCount,
-    //   remainingPegs: this.remainingPegs(),
-    // });
-    let gameOver = new GameOver("GameOver");
-    this.scene.add("GameOver", gameOver, true);
-    this.scene.remove("game");
+    let gameOver = new GameOver('GameOver');
+    this.scene.add('GameOver', gameOver, true);
+    this.scene.remove('game');
+  }
+
+  gameWin() {
+    this.registry.set('gamedata', {
+      remainingTime: this.remainingTime(),
+    });
+    this.scene.start('GameWin');
+  }
+
+  remainingTime() {
+    return this.countdown.update();
   }
 
   createMonkeyAnimations() {
