@@ -43,5 +43,6 @@ export default class CountdownController {
     const seconds = remaining / 1000;
 
     this.label.text = seconds.toFixed(2);
+    return this.label.text;
   }
 }

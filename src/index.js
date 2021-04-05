@@ -22,7 +22,7 @@ const config = {
 const game = new Phaser.Game(config);
 
 game.scene.add('game', MyGame);
-// game.scene.add('LevelTwo', LevelTwo);
+game.scene.add('LevelTwo', LevelTwo);
 // game.scene.add('GameOver', GameOver);
 game.scene.add('GameWin', GameWin);
 

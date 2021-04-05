@@ -12,19 +12,17 @@ export default class GameOver extends Phaser.Scene {
     this.load.image('next', 'assets/next.png');
   }
   create() {
-    var gamedata = this.registry.get('gamedata');
-
     this.add.text(this.scale.width * 0.35, 100, 'Game Over', {
       font: '60px Courier',
       fill: '#ffffff',
     });
 
-    var btn1 = this.add.image(this.scale.width * 0.35, 300, 'playagain');
+    var btn1 = this.add.image(this.scale.width * 0.35, 200, 'playagain');
     btn1.setInteractive();
     btn1.setOrigin(0);
     btn1.on('pointerup', this.startGame, this);
 
-    var btn2 = this.add.image(this.scale.width * 0.35, 400, 'next');
+    var btn2 = this.add.image(this.scale.width * 0.35, 300, 'next');
     btn2.setInteractive();
     btn2.setOrigin(0);
     btn2.on('pointerup', this.nextGame, this);
@@ -36,9 +34,9 @@ export default class GameOver extends Phaser.Scene {
     this.scene.remove('GameOver');
   }
   nextGame() {
-    let levelTwo = new LevelTwo('LevelTwo');
-    this.scene.add('LevelTwo', levelTwo, true);
-    this.scene.remove('GameOver');
-    // this.scene.remove('game');
+    // let levelTwo = new LevelTwo('LevelTwo');
+    // this.scene.add('LevelTwo', levelTwo, true);
+    // this.scene.remove('GameOver');
+    this.scene.start('LevelTwo');
   }
 }

@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Zone from '../entity/Zone.js';
 import GameOver from './GameOver';
-import GameWin from './GameWin';
 import CountdownController from '../entity/CountdownController';
 
 export default class MyGame extends Phaser.Scene {
@@ -87,9 +86,6 @@ export default class MyGame extends Phaser.Scene {
         this.timeLeft--;
         let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
         this.energyMask.x -= stepWidth;
-        // if (this.timeLeft == 0) {
-        //   this.scene.stop();
-        // }
       },
       callbackScope: this,
       loop: true,
@@ -439,20 +435,21 @@ export default class MyGame extends Phaser.Scene {
   }
 
   gameOver() {
-    // this.registry.set('gamedata', {
-    //   movesCount: this.movesCount,
-    //   remainingPegs: this.remainingPegs(),
-    // });
     let gameOver = new GameOver('GameOver');
     this.scene.add('GameOver', gameOver, true);
     this.scene.remove('game');
   }
 
   gameWin() {
-    // let gameWin = new GameWin('GameWin');
-    // this.scene.add('GameWin', gameWin, true);
-    // this.scene.remove('game');
+    this.registry.set('gamedata', {
+      remainingTime: this.remainingTime(),
+    });
     this.scene.start('GameWin');
+  }
+
+  remainingTime() {
+    return this.countdown.update();
+    // console.log('countdown.update', this.countdown.update());
   }
 
   createMonkeyAnimations() {

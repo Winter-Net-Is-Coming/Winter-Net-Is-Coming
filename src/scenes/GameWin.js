@@ -20,12 +20,12 @@ export default class GameWin extends Phaser.Scene {
     });
 
     // if (gamedata.remainingTime > 1) {
-    //   this.remainingTime = this.add.text(
-    //     30,
-    //     220,
-    //     'Remaining Time: ' + gamedata.remainingTime,
-    //     { font: '42px Courier', fill: '#000000' }
-    //   );
+    this.remainingTime = this.add.text(
+      this.scale.width * 0.35,
+      200,
+      'Score: ' + gamedata.remainingTime,
+      { font: '42px Courier', fill: '#ffffff' }
+    );
     // }
 
     var btn1 = this.add.image(this.scale.width * 0.35, 300, 'playagain');
@@ -46,9 +46,6 @@ export default class GameWin extends Phaser.Scene {
     this.scene.start('game');
   }
   nextGame() {
-    let levelTwo = new LevelTwo('LevelTwo');
-    this.scene.add('LevelTwo', levelTwo, true);
-    this.scene.remove('GameWin');
-    // this.scene.remove('game');
+    this.scene.start('LevelTwo');
   }
 }
