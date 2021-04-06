@@ -56,6 +56,19 @@ export default class GameWin extends Phaser.Scene {
     // this.scene.add('game', myGame, true);
     // this.scene.remove('GameWin');
     this.scene.start("game");
+     $.get({
+       url: '/api/score',
+       //data: { score: gamedata.remainingTime},
+       success: function(data) {
+                console.log('data from jquery is ++++++++', data);
+                if(data.score !== -1){
+                  document.getElementById('last-score').textContent = `Last Score: ${data.score}`;
+                }
+        
+       },
+      error: (err) => console.error(err),
+     });
+
   }
   nextGame() {
     this.scene.start("LevelTwo");
