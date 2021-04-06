@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const {User, User_Game_Profile} = require('../db/models')
 const passport = require('passport');
 module.exports = router;
 
@@ -67,8 +67,16 @@ router.post('/logout', async (req, res, next) => {
   res.redirect('/');
 });
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  let profile;
+  if(req.user){
+    profile = await User_Game_Profile.findOne({ where: {userId: req.user.id }});
+    return res.json({ 
+      user: req.user, 
+      score: !!profile ? profile.score : -1,
+    });
+  }
+  res.status(403).send();
 })
 
 router.use('/google', require('./google'))

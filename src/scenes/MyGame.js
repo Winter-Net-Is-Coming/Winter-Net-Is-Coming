@@ -450,6 +450,19 @@ export default class MyGame extends Phaser.Scene {
     this.scene.start("GameWin");
   }
 
+
+  wonGame() {
+    console.log("THIS IS NOT REAL WON GAME LOGIC")
+    $.post({
+      url: '/api/score',
+      data: { score: this.countdown.getTimeRemaining() / 1000},
+      success: (data) => console.log(data),
+      error: (err) => console.error(err),
+    })
+
+    throw Error("STOP THIS FROM OVER FLOODING SERVER")
+  }
+
   remainingTime() {
     return this.countdown.update();
   }

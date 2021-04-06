@@ -29,6 +29,13 @@ export default class GameWin extends Phaser.Scene {
       "Score: " + gamedata.remainingTime,
       { font: "42px Courier", fill: "#ffffff" }
     );
+
+    $.post({
+      url: '/api/score',
+      data: { score: gamedata.remainingTime},
+      success: (data) => console.log(data),
+      error: (err) => console.error(err),
+    })
     // }
 
     var btn1 = this.add.image(this.scale.width * 0.35, 300, "playagain");
