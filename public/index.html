@@ -43,6 +43,7 @@
           <button type="button" class="btn btn-outline-primary mr-1" onclick="logoutHandler()">
               Logout
             </button>
+          <span id='last-score' class='ml-3'>Last Score:</span>
         </div>
       </h1>
     </div>
@@ -75,6 +76,10 @@
       success: function(data){
         document.getElementById('login-container').style.visibility = 'hidden';
         document.getElementById('logout-container').style.visibility = 'visible';
+        if(data.score !== -1){
+          document.getElementById('last-score').textContent = `Last Score: ${data.score}`;
+        }
+
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
