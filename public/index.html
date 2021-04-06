@@ -21,18 +21,18 @@
   <body id="gradient">
     <div class="container">
       <h1>
-        <span style="color: green">AL goes Exploring</span>
+        <span style="color: green; font-weight: bold">AL Goes Exploring!</span>
 
         <div id="login-container" class="row float-right">
           <a href="/login.html"
-            ><button type="button" class="btn btn-outline-primary mr-1">
+            ><button type="button" class="btn btn-outline-success mr-1">
               Login
             </button></a
           >
           <a href="/signup.html">
             <button
               type="button"
-              class="btn btn-outline-primary"
+              class="btn btn-outline-success"
               href="/signup.html"
             >
               Sign-up
@@ -40,75 +40,103 @@
           >
         </div>
         <div id="logout-container" class="row float-right">
-          <button type="button" class="btn btn-outline-primary mr-1" onclick="logoutHandler()">
-              Logout
-            </button>
-          <span id='last-score' class='ml-3'>Last Score:</span>
+          <button
+            type="button"
+            class="btn btn-outline-success mr-1"
+            onclick="logoutHandler()"
+          >
+            Logout
+          </button>
+          <span id="last-score" class="ml-3" style="color: green"
+            >Last Score:</span
+          >
         </div>
       </h1>
     </div>
     <div id="game"></div>
     <div class="container">
       <div class="row">
-        <div class="col-sm">
+        <div
+          class="col-sm"
+          style="
+            background-color: #aee3f2;
+            border: black solid 2px;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+          "
+        >
           <h2>CONTROLS</h2>
-          <ul>
-            <li>Left: <--</li>
-            <li>Right: --></li>
+          <ul style="list-style-type: none">
+            <li>Left: Left Arrow Key <--</li>
+            <li>Right: Right Arrow Key --></li>
             <li>Jump: Space-Bar</li>
-            <li>Mouse: to move blocks</li>
+            <li>Mouse: Click and drag to move blocks</li>
           </ul>
         </div>
-        <div class="col-sm">
+        <div
+          class="col-sm"
+          style="
+            background-color: #aee3f2;
+            border: black solid 2px;
+            border-radius: 5px;
+            margin: 5px;
+          "
+        >
           <h2>MISSION</h2>
           <span>
-            Get AL all the way to the other side! You may run into some trouble
-            along the way...
+            AL is on the quest for bananas! Help Al by Following the
+            instructions to drag and drop the blocks in order to get to the
+            other side!
           </span>
         </div>
       </div>
     </div>
   </body>
-   <script>
+  <script>
     $.ajax({
       type: 'GET',
       url: '/auth/me',
-      success: function(data){
+      success: function (data) {
         document.getElementById('login-container').style.visibility = 'hidden';
-        document.getElementById('logout-container').style.visibility = 'visible';
-        if(data.score !== -1){
-          document.getElementById('last-score').textContent = `Last Score: ${data.score}`;
+        document.getElementById('logout-container').style.visibility =
+          'visible';
+        if (data.score !== -1) {
+          document.getElementById(
+            'last-score'
+          ).textContent = `Last Score: ${data.score}`;
         }
 
-        if(data.score == -1) {
-                  document.getElementById('last-score').textContent = `Last Score: 0`;
-                }
-
+        if (data.score == -1) {
+          document.getElementById('last-score').textContent = `Last Score: 0`;
+        }
 
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
 
-      error: function(data){
-
+      error: function (data) {
         document.getElementById('login-container').style.visibility = 'visible';
         document.getElementById('logout-container').style.visibility = 'hidden';
         //document.getElementById('login-container').style.visibility = 'hidden';
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
-    })
+    });
 
-    const logoutHandler = () => $.ajax({
-      type: 'POST',
-      url: '/auth/logout',
-      success: () => {
-        return (
-          document.getElementById('login-container').style.visibility = 'visible',
-          document.getElementById('logout-container').style.visibility = 'hidden'
-       
-        )},
-      error: (err) => console.error(err),
-    })
+    const logoutHandler = () =>
+      $.ajax({
+        type: 'POST',
+        url: '/auth/logout',
+        success: () => {
+          return (
+            (document.getElementById('login-container').style.visibility =
+              'visible'),
+            (document.getElementById('logout-container').style.visibility =
+              'hidden')
+          );
+        },
+        error: (err) => console.error(err),
+      });
   </script>
 </html>
