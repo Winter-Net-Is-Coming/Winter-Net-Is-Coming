@@ -6,9 +6,7 @@ Al Goes Exploring was inspired by educational games of our childhood. They did a
 
 https://algosort.herokuapp.com/
 
-![screenshot](https://github.com/Winter-Net-Is-Coming/Winter-Net-Is-Coming/blob/master/ScreenShot.png)
-
-
+![screenshot](/Users/davidcho/Projects/Winter-Net-Is-Coming/ScreenShot.png)
 
 ## Tech/framework used
 
