@@ -80,6 +80,11 @@
           document.getElementById('last-score').textContent = `Last Score: ${data.score}`;
         }
 
+        if(data.score == -1) {
+                  document.getElementById('last-score').textContent = `Last Score: 0`;
+                }
+
+
         //You have a user/remove sign in and signup
         //$("#login-container").css('visibility', 'none');
       },
