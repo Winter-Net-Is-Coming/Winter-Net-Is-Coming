@@ -14,10 +14,8 @@ export default class MyGame extends Phaser.Scene {
 
   preload() {
     this.load.atlas("monkey", "assets/monkey.png", "assets/monkey.json");
-
     this.load.image("tiles", "assets/platformersheet.png");
     this.load.image("tilesbg", "assets/backgroundColorForest.png");
-
     this.load.tilemapTiledJSON("tilemap", "assets/levelOne.json");
 
     for (let i = 1; i <= 15; i++) {
@@ -26,7 +24,6 @@ export default class MyGame extends Phaser.Scene {
 
     this.load.image("energycontainer", "assets/energycontainer.png");
     this.load.image("energybar", "assets/energybar.png");
-
     this.load.image("banana", "assets/banana.png");
   }
 
@@ -102,22 +99,9 @@ export default class MyGame extends Phaser.Scene {
     //adding test zone
     this.zone = new Zone(this);
 
-    //this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
-
     this.dropZOne = this.zone.renderZone(650, 1800, 400, 1000);
     this.dropZTwo = this.zone.renderZone(1780, 1800, 600, 1100);
     this.dropZThree = this.zone.renderZone(4267, 2200, 600, 2200);
-
-    //this.dropZTwo = this.zone.renderZone(680, 1800, 200, 1000);
-
-    //this.dropZThree = this.zone.renderZone(570, 1800, 200, 1000);
-
-    //this.dropZFour = this.zone.renderZone(1780, 1800, 600, 1100);
-
-    //this.outlineOne = this.zone.renderOutline(this.dropZFour, 0xff09d2);
-    // this.outlineTwo = this.zone.renderOutline(this.dropZTwo, 0xff09d2);
-    // this.outlineThree = this.zone.renderOutline(this.dropZThree, 0xff09d2);
-    // overall zone 750, 2100, 700, 1200
 
     const block4 = this.generateBlock(490, 1900, "block4");
     const block2 = this.generateBlock(block4.x + 105, 1900, "block2");
@@ -144,19 +128,11 @@ export default class MyGame extends Phaser.Scene {
     this.input.setDraggable(block10, true);
 
     this.input.dragDistanceThreshold = 0;
-    // -this.input.on("dragstart", function (pointer, gameObject) {
-    //   gameObject.setTint(0xff0000);
-    // });
 
     this.input.on("drag", function (pointer, gameObject, dragX, dragY) {
       gameObject.x = dragX;
       gameObject.y = dragY;
     });
-
-    // this.input.on("drag", function (pointer, gameObject) {
-    //   // console.log('X', gameObject.x, 'Y', gameObject.y);
-    //   //console.log(gameObject.x);
-    // });
 
     this.input.on("dragend", function (pointer, gameObject, dropped) {
       //while dragging, when dropped, return object back to original starting pos.
@@ -223,10 +199,6 @@ export default class MyGame extends Phaser.Scene {
     });
 
     /////////INSERTION SORT //////////////
-
-    // if (this.monkey.x > 200) {
-    //   helper.setText("Insertion Sort");
-    // }
 
     let helperInsertion = this.add.text(
       1000,
@@ -353,37 +325,6 @@ export default class MyGame extends Phaser.Scene {
       }
     });
 
-    ///////////
-
-    // this.input.on("dragend", function (pointer, gameObject) {
-    //   let currentBlock = gameObject.texture.key;
-    //   let xPos = gameObject.x;
-    //   if (currentBlock === "block10" && xPos > 4000 && xPos < 4051) {
-    //     window.alert("Thats right!");
-    //     block10.input.draggable = false;
-    //     block14.input.draggable = true;
-    //   } else if (currentBlock === "block14" && xPos > 4105 && xPos < 4200) {
-    //     window.alert("Thats right!");
-    //     block14.input.draggable = false;
-    //     block12.input.draggable = true;
-    //   } else if (currentBlock === "block12" && xPos > 4372 && xPos < 4432) {
-    //     window.alert("Thats right!");
-    //     block12.input.draggable = false;
-    //     block11.input.draggable = true;
-    //   } else if (currentBlock === "block11" && xPos > 4110 && xPos < 4120) {
-    //     window.alert("Thats right!");
-    //     block11.input.draggable = false;
-    //     block12.input.draggable = true;
-    //   } else if (currentBlock === "block12" && xPos > 4185 && xPos < 4225) {
-    //     window.alert("Thats right!");
-    //     block12.input.draggable = false;
-    //     block13.input.draggable = true;
-    //   } else if (currentBlock === "block13" && xPos > 4296 && xPos < 4308) {
-    //     window.alert("Congratulations on solving merge sort!");
-    //     block13.input.draggable = false;
-    //   }
-    // });
-
     //victory coordinates 705 6293
     this.cameras.main.startFollow(this.monkey);
 
@@ -413,14 +354,9 @@ export default class MyGame extends Phaser.Scene {
     }
 
     const justPressedSpace = Phaser.Input.Keyboard.JustDown(this.cursors.space);
-    if (justPressedSpace && this.monkey.body.velocity.y === 0) {
-      //this.scene.switch('LevelTwo', LevelTwo);
+    if (justPressedSpace) {
       this.monkey.setVelocity(-15);
     }
-    // if (justPressedSpace && this.monkey.body.velocity.y === 0) {
-    //   this.monkey.play('jump', true);
-    //   this.monkey.setVelocityY(-15);
-    // }
 
     this.countdown.update();
 
@@ -450,17 +386,16 @@ export default class MyGame extends Phaser.Scene {
     this.scene.start("GameWin");
   }
 
-
   wonGame() {
-    console.log("THIS IS NOT REAL WON GAME LOGIC")
+    console.log("THIS IS NOT REAL WON GAME LOGIC");
     $.post({
-      url: '/api/score',
-      data: { score: this.countdown.getTimeRemaining() / 1000},
+      url: "/api/score",
+      data: { score: this.countdown.getTimeRemaining() / 1000 },
       success: (data) => console.log(data),
       error: (err) => console.error(err),
-    })
+    });
 
-    throw Error("STOP THIS FROM OVER FLOODING SERVER")
+    throw Error("STOP THIS FROM OVER FLOODING SERVER");
   }
 
   remainingTime() {
@@ -502,10 +437,3 @@ export default class MyGame extends Phaser.Scene {
       });
   }
 }
-
-// //INSERTION SORT
-//  [] Make the drop zone prevent user from dragging block foreword
-//  [] Enable drag for the block in question
-//  [] Drag to proper position, then disable drag.
-//  [] Enable drag for block that is 'next in line'
-//

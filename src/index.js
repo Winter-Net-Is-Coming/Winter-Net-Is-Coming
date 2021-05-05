@@ -1,8 +1,6 @@
-
-import MyGame from './scenes/MyGame';
-import LevelTwo from './scenes/LevelTwo';
-import GameOver from './scenes/GameOver';
-import GameWin from './scenes/GameWin';
+import MyGame from "./scenes/MyGame";
+import LevelTwo from "./scenes/LevelTwo";
+import GameWin from "./scenes/GameWin";
 
 const config = {
   type: Phaser.AUTO,
@@ -13,7 +11,7 @@ const config = {
   physics: {
     default: "matter",
     matter: {
-      gravity: { y: 2 },
+      gravity: { y: 2.5 },
 
       debug: false,
     },
@@ -22,12 +20,10 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-game.scene.add('game', MyGame);
-game.scene.add('LevelTwo', LevelTwo);
-// game.scene.add('GameOver', GameOver);
-game.scene.add('GameWin', GameWin);
+game.scene.add("game", MyGame);
+game.scene.add("LevelTwo", LevelTwo);
+game.scene.add("GameWin", GameWin);
 
-game.scene.start('game');
-// game.scene.start('LevelTwo');
+game.scene.start("game");
 
 export default game;
